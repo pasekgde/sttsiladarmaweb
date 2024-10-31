@@ -9,6 +9,7 @@ class Anggota extends Model
 {
     use HasFactory;
     protected $table = 'anggota';
+    protected $primaryKey = 'idanggota';
     protected $fillable = [
         'idanggota',
         'nama',

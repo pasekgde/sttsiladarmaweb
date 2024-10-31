@@ -8,6 +8,6 @@ class Lkegcontroller extends Controller
 {
     public function index()
     {
-        return view('pages.kegiatan.pilihlaporan');
+        //return view('pages.kegiatan.pilihlaporan');
     }
 }

@@ -70,7 +70,7 @@
         </nav>
 
         <main class="py-4">
-            <center><img src="https://i.ibb.co/KNwdX75/logost-removebg-preview.png" width="140px"></img>
+            <center><img src="https://i.ibb.co.com/bNVPrX5/logo.png" width="140px"></img>
             <br>
             <div class="clearfix"></div>
             @yield('content')

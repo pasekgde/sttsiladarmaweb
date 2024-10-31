@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->id();
             $table->string('kodekegiatan');
+            $table->string('tanggalkegiatan');
             $table->string('namakegiatan');
+            $table->string('deskripsi');
             $table->string('user');
             $table->timestamps();
         });

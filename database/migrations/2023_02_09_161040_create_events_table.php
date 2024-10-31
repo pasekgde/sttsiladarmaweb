@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('kodeevent');
+            $table->string('kodekegiatan');
             $table->string('jeniskas');
             $table->date('tglkas');
             $table->string('keterangan');

@@ -85,8 +85,8 @@
                                             <td>{{$ev->jeniskas}}</td>
                                             <td>{{$ev->keterangan}}</td>
                                             <td>{{$ev->qty}}</td>
-                                            <td>{{$ev->harga}}</td>
-                                            <td>{{$ev->jumlah}}</td>
+                                            <td>{{currency_IDR($ev->harga)}}</td>
+                                            <td>{{currency_IDR($ev->jumlah)}}</td>
                                             <td>{{$ev->user}}</td>
                                             <td style="text-align:center">
                                                 <a href="#" wire:click="edit({{$ev->id}})" style="color:blue"><i class="fa fa-pencil"></i> Edit </a>&nbsp&nbsp&nbsp

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('anggota', function (Blueprint $table) {
             $table->increments('idanggota');
+            $table->increments('idanggota');
             $table->string('nama');
             $table->date('tgllahir');
             $table->integer('umur');

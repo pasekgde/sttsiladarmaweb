@@ -69,10 +69,13 @@ Route::get('/pilihevent/{id}', [App\Http\Livewire\Pilihkegiatan::class, 'pilih']
 Route::get('/laporankegiatan', [App\Http\Controllers\LevenController::class, 'index'])->name('levent');
 
 //pilih Formkegiatan
-Route::get('/pilihlaporan', [App\Http\Controllers\LkegController::class, 'index'])->name('pilihlaporan');
+Route::get('/pilihlaporan', [App\Http\Controllers\LapkegController::class, 'index'])->name('pilihlaporan');
 
 //pilih FormLaporankegiatan
 Route::get('/pililaporan/{id}', [App\Http\Livewire\Pilihevent::class, 'pilih'])->name('pilih');
+
+//absensi
+Route::get('/absensi', [App\Http\Controllers\AbsensiController::class, 'index'])->name('absensi');
 
 });
 

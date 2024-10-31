@@ -20,6 +20,9 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom Theme Style -->
     <link href="{{URL:: asset('/Asset/build/css/custom.min.css')}}" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+    <link href="{{ asset('wizard.css') }}" rel="stylesheet" id="bootstrap-css">
     @stack('styles')
   </head>
 
@@ -38,7 +41,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="https://i.ibb.co/CPDmCM8/logost.jpg" alt="..." class="img-circle profile_img">
+                <img src="https://i.ibb.co.com/bNVPrX5/logo.png" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
@@ -100,8 +103,8 @@
         <!-- /footer content -->
       </div>
     </div>
-    @stack('scripts')
   </body>
+  @stack('scripts')
   <!-- jQuery -->
     <script src="{{URL:: asset('/Asset/vendors/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap -->
