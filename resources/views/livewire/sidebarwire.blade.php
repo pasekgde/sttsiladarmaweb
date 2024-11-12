@@ -21,7 +21,7 @@
                   <li><a><i class="fa fa-book"></i> Absensi <span class="fa fa-chevron-down"></a>
                     <ul class="nav child_menu">
                           <li><a href="/absensi"> Buat Absensi</a></li>
-                          <li><a href="#l"> Laporan Absensi</a></li>
+                          <li><a href="/laporan-absensi"> Laporan Absensi</a></li>
                       </ul>
                   </li>
                   <li><a><i class="fa fa-money"></i> Data KAS <span class="fa fa-chevron-down"></span></a>

@@ -77,6 +77,34 @@
                 });
         });
     </script>
+    <script>
+        function formatRupiah(input) {
+            // Hapus karakter non-digit kecuali koma
+            let value = input.value.replace(/[^,\d]/g, '');
+            let [integer, decimal] = value.split(',');
+
+            // Format angka dengan titik setiap ribuan
+            let result = integer.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            if (decimal !== undefined) {
+                result += ',' + decimal;
+            }
+
+            // Tambahkan prefix 'Rp ' dan tampilkan hasilnya
+            input.value = 'Rp ' + result;
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr("#datepicker", {
+                dateFormat: "d/m/Y",
+                onChange: function(selectedDates, dateStr, instance) {
+                document.getElementById('datepicker').dispatchEvent(new Event('input')); // Trigger input event
+        }
+            });
+        });
+    </script>
+    
     <script src="{{URL::asset('/Asset/vendors/jquery/dist/jquery.min.js')}}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -93,7 +121,6 @@
     </div>
 
     <div class="clearfix"></div>
-    @livewire('attendance-component', ['dataanggota' => $dataanggota])
         @livewire('absensi')
     </div>
 </div>

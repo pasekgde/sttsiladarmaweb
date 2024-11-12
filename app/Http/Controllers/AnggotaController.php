@@ -84,4 +84,5 @@ class AnggotaController extends Controller
         $data = DB::table('anggota')->where('idanggota', $id)->delete();
         return redirect()->route('dataanggota');
     }
+    
 }

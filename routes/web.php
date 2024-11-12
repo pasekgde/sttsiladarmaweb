@@ -77,5 +77,10 @@ Route::get('/pililaporan/{id}', [App\Http\Livewire\Pilihevent::class, 'pilih'])-
 //absensi
 Route::get('/absensi', [App\Http\Controllers\AbsensiController::class, 'index'])->name('absensi');
 
+//laporan absensi
+Route::get('/laporan-absensi', [App\Http\Controllers\LaporanabsensiController::class, 'index'])->name('laporanabsensi');
+
+// Route::get('/print-absensi', [App\Http\Controllers\PrintController::class, 'show'])->name('print.absensi');
+
 });
 

@@ -23,6 +23,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   
     <link href="{{ asset('wizard.css') }}" rel="stylesheet" id="bootstrap-css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @stack('styles')
   </head>
 
@@ -111,7 +112,7 @@
    <script src="{{URL:: asset('/Asset/vendors/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
    <script src="{{URL:: asset('/Asset/vendors/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL:: asset('/Asset/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- Custom Theme Scripts -->
     <script src="{{URL:: asset('/Asset/build/js/custom.min.js')}}"></script>
     

@@ -34,7 +34,7 @@
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Tanggal Kegiatan <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
-                                        <input type="date" wire:model="tanggal_kegiatan" required="required" class="form-control @error('tanggal_kegiatan') is-invalid @enderror">
+                                        <input type="text" id="datepicker" wire:model="tanggal_kegiatan" required="required" class="form-control @error('tanggal_kegiatan') is-invalid @enderror" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -60,7 +60,7 @@
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">Denda</label>
                                     <div class="col-md-6 col-sm-6 ">
-                                        <input type="text" wire:model="denda" required="required" class="form-control @error('denda') is-invalid @enderror">
+                                        <input type="text" wire:model="denda" required="required" oninput="formatRupiah(this)" class="form-control @error('denda') is-invalid @enderror">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -81,8 +81,8 @@
                           <div class="{{ $currentStep != 2 ? 'displayNone' : '' }}" id="step-2">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12  ">
-                                    <div class="x_content">
-                                        <table class="table table-striped">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped jambo_table bulk_action">
                                             <thead>
                                                 <tr>
                                                 <th>#</th>
@@ -95,18 +95,17 @@
                                             <tbody>
                                                 @php $no = 1; @endphp
                                                 @foreach ($dataanggota as $index => $ev)
-                                                <tr>
+                                                <tr class="{{ $ev['status'] === 'Nekel' ? 'bg-warning' : ''}}">
+                                                    
                                                     <th style="width:2%">{{ $index + 1 }}</th>
                                                     <td>{{ $ev->nama }}</td>
                                                     <td>{{ $ev->tempek }}</td>
                                                     <td>{{ $ev->status }}</td>
                                                     <td>
-                                                        <select class="form-control @error('presensi') is-invalid @enderror" wire:model="presensi.{{ $index }}">
+                                                        <select class="form-control @error('presensi') is-invalid @enderror" wire:model="presensi.{{ $index }}" @if($ev->status === 'Nekel') disabled @endif>
                                                             <option value="">Pilih Status</option>
                                                             <option value="Hadir" selected>Hadir</option>
-                                                            <option value="Izin">Izin</option>
-                                                            <option value="Sakit">Sakit</option>
-                                                            <option value="TK">Tanpa Keterangan (TK)</option>
+                                                            <option value="Tidak Hadir">Tidak Hadir/(TK)</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -126,64 +125,134 @@
                           
                          <!-- FORM STEP 3 -->
                           <div class="{{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-3" >
-                            <table class="table">
-                              <tr>
-                                  <td>Tanggal Kegiatan:</td>
-                                  <td><strong>{{$tanggal_kegiatan}}</strong></td>
-                              </tr>
-                              <tr>
-                                  <td>Nama Kegiatan:</td>
-                                  <td><strong>{{$nama_kegiatan}}</strong></td>
-                              </tr>
-                              <tr>
-                                  <td>Jenis Kegiatan:</td>
-                                  <td><strong>{{$jenis_kegiatan}}</strong></td>
-                              </tr>
-                              <tr>
-                                  <td>Denda:</td>
-                                  <td><strong>{{$denda}}</strong></td>
-                              </tr>
-                              <tr>
-                                  <td>Keterangan:</td>
-                                  <td><strong>{{$keterangan}}</strong></td>
-                              </tr>
-                            </table>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                    <th>#</th>
-                                    <th>Nama Anggota</th>
-                                    <th>Tempek</th>
-                                    <th>Status</th>
-                                    <th>Presensi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php $no = 1; @endphp
-                                    @foreach ($dataanggota as $index => $ev)
-                                    <tr>
-                                        <th style="width:2%">{{ $index + 1 }}</th>
-                                        <td>{{ $ev->nama }}</td>
-                                        <td>{{ $ev->tempek }}</td>
-                                        <td>{{ $ev->status }}</td>
-                                        <td>
-                                            <input type="text" disabled class="form-control" value="{{ $presensi[$index] ?? 'N/A' }}">
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <div class="ln_solid"></div>
-                                 <div class="tombolditengah">
-                                      <button type="button" class="btn btn-danger" wire:click="back(2)">Kembali</button>
-                                      <button type="button" class="btn btn-success" wire:click="submitForm()">Simpan Presensi</button>
-                                  </div>
-                          </div>
+                            <div class="container mt-10">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="card">
+                                            <h5 class="card-header text-white bg-primary text-center">KEGIATAN HARI INI</h5>
+                                            <div class="card-body">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label">Tanggal Kegiatan</label>
+                                                    <div class="col-sm-7">
+                                                    <input type="text" class="form-control" disabled value="{{ $tanggal_kegiatan }}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label">Nama Kegiatan</label>
+                                                    <div class="col-sm-7">
+                                                    <input type="text" class="form-control" disabled value="{{ $nama_kegiatan }}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label">Jenis Kegiatan</label>
+                                                    <div class="col-sm-7">
+                                                    <input type="text" class="form-control" disabled value="{{ $jenis_kegiatan }}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label">Denda</label>
+                                                    <div class="col-sm-7">
+                                                    <input type="text" class="form-control" disabled value="{{ $denda }}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label">Keterangan</label>
+                                                    <div class="col-sm-7">
+                                                    <input type="text" class="form-control" disabled value="{{ $keterangan }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class= "col-md-9">
+                                        <div class="card">
+                                            <h5 class="card-header text-white bg-success text-center">DATA PRESENSI ANGGOTA</h5>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                        <th>#</th>
+                                                        <th>Nama Anggota</th>
+                                                        <th>Tempek</th>
+                                                        <th>Status</th>
+                                                        <th>Presensi</th>
+                                                        <th>Denda</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; @endphp
+                                                        @foreach ($dataanggota as $index => $ev)
+                                                        <tr class="{{ $presensi[$index] === 'Tidak Hadir' ? 'bg-danger' : ''}}">
+                                                            <th style="width:2%">{{ $index + 1 }}</th>
+                                                            <td>{{ $ev->nama }}</td>
+                                                            <td>{{ $ev->tempek }}</td>
+                                                            <td>{{ $ev->status }}</td>
+                                                            <td>
+                                                               {{ $presensi[$index] ?? 'N/A' }}
+                                                            </td>
+                                                            @if ($presensi[$index] === 'Hadir')
+
+                                                                <td>-</td>    
+                                                            @else
+
+                                                                <td>{{ $denda }}</td>
+                                                            @endif
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <div class="ln_solid"></div>
+                                                    <div class="tombolditengah">
+                                                        <button type="button" class="btn btn-danger" wire:click="back(2)">Kembali</button>
+                                                        <button type="button" class="btn btn-success" wire:click="submitForm()">Simpan Presensi</button>
+                                                        <button type="button" cla=" btn btn-warning" wire:click="printAbsensi()">Print Data</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <div class="card">
+                                            <h5 class="card-header text-white bg-info text-center">INFO PRESENSI</h5>
+                                            <div class="card-body">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label">Total Anggota</label>
+                                                    <div class="col-sm-7">
+                                                    <input type="text" class="form-control" disabled value="{{ $totalAnggota }} Orang">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label">Total Hadir</label>
+                                                    <div class="col-sm-7">
+                                                    <input type="text" class="form-control" disabled value="{{ $totalHadir }} Orang">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label">Total Tidak Hadir</label>
+                                                    <div class="col-sm-7">
+                                                    <input type="text" class="form-control" disabled value="{{ $totalTidakHadir }} Orang">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label">Total Denda</label>
+                                                    <div class="col-sm-7">
+                                                    <input type="text" class="form-control" disabled value="Rp. {{ number_format($totalDenda, 0, ',', '.') }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>  
                         </div>
                         <!-- End SmartWizard Content -->
                     </div>
                 </div>
             </div>
         </div>
-
+    </div>
 </div>
