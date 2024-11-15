@@ -13,13 +13,91 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <style>
+        /* Styling for the Body to center the logo */
+body {
+    background-image: url('https://i.ibb.co.com/Fbvdwh9/temple-gates-lempuyang-luhur-temple-bali-indonesia.jpg'); /* Ganti dengan URL gambar latar belakang Anda */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Center the logo */
+.text-center img {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Border for the Quote */
+.quote-box {
+    border: 2px solid #6a11cb;  /* Warna border ungu */
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);  /* Warna latar belakang kutipan */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+blockquote {
+    margin: 0;
+}
+
+blockquote footer {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+blockquote p {
+    font-style: italic;
+    font-weight: bold;
+}
+
+/* Button Customization */
+.btn-primary {
+    background-color: #6a11cb;
+    border-color: #6a11cb;
+}
+
+.btn-primary:hover {
+    background-color: #2575fc;
+    border-color: #2575fc;
+}
+
+/* Customizing Form Inputs */
+.form-control {
+    border-radius: 30px;
+    box-shadow: none;
+    border: 1px solid #ddd;
+}
+
+.form-control:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .card-body {
+        padding: 2rem;
+    }
+
+    /* Ensure quote-box has margin at smaller screens */
+    .quote-box {
+        margin-top: 20px;
+    }
+}
+
+    </style>
+
     <!-- Scripts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
 @include('sweetalert::alert')
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <!-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     STT SILA DHARMA
@@ -29,14 +107,14 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
+            
                     <ul class="navbar-nav me-auto">
 
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
+         
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
+             
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -67,21 +145,10 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> -->
 
-        <main class="py-4">
-            <center><img src="https://i.ibb.co.com/bNVPrX5/logo.png" width="140px"></img>
-            <br>
-            <div class="clearfix"></div>
-            @yield('content')
-            <div class="col-md-6">
-            <br>
-            <i><b>"Sagilik Saguluk, Salunglung Sabayantaka, Paras Paros Sarpanaya, Saling Asah Asih Asuh"</b><i>
-                <br>
-                <p>Bersatu padu, menghargai pendapat orang lain, memutuskan segala sesuatu dengan cara musyawarah dan mufakat, saling mengingatkan, menyayangi dan membantu.</p>
-</div>
-            </center>
-        </main>
+        <div class="clearfix"></div>
+        @yield('content')
     </div>
 </body>
 </html>

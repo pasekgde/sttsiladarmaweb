@@ -11,58 +11,55 @@
                     <div class="x_content">
                         <div class="card">
                             <h5 class="card-header text-white bg-success text-center">DATA KEGIATAN PRESENSI</h5>
-                            <div class="card-body">                           
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                        <th>#</th>
-                                        <th>Nama Kegiatan</th>
-                                        <th>Tanggal Kegiatan</th>
-                                        <th>Jenis Kegiatan</th>
-                                        <th>Denda</th>
-                                        <th>Total Denda</th>
-                                        <th>Total Anggota</th>
-                                        <th>Total Hadir</th>
-                                        <th>Total Tidak Hadir</th>
-                                        <th>Keterangan</th>
-                                        <th>Operator</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php $no = 1; @endphp
-                                        @foreach ($tabelkegiatan as $index => $ev)
-                                            <tr wire:click="$set('selectedKegiatanId', {{ $ev->idkegiatan }})" 
-                                                class="{{ $selectedKegiatanId == $ev->idkegiatan ? 'bg-danger text-white' : '' }}">
-                                                <th style="width:2%">{{ $index + 1 }}</th>
-                                                <td>{{ $ev->tanggal_kegiatan }}</td>
-                                                <td>{{ $ev->nama_kegiatan }}</td>
-                                                <td>{{ $ev->jenis_kegiatan }}</td>
-                                                <td>{{ currency_IDR($ev->denda) }}</td>
-                                                <td>{{ currency_IDR($ev->total_denda) }}</td>
-                                                <td>{{ $ev->total_anggota }}</td>
-                                                <td>{{ $ev->total_hadir }}</td>
-                                                <td>{{ $ev->total_tidak_hadir }}</td>
-                                                <td>{{ $ev->keterangan }}</td>
-                                                <td>{{ $ev->user }}</td>
-                                                <td>
-                                                </td>
+                            <div class="card-body">
+                                <div style="max-height: 400px; overflow-y: auto; display: block;">
+                                    <table class="table">
+                                        <thead class="thead-fixed">
                                             <tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                
-                                    {{ $tabelkegiatan->links() }}
-                                
+                                                <th scope="col">#</th>
+                                                <th scope="col">Tanggal Kegiatan</th>
+                                                <th scope="col">Nama Kegiatan</th>
+                                                <th scope="col">Jenis Kegiatan</th>
+                                                <th scope="col">Denda</th>
+                                                <th scope="col">Total Denda</th>
+                                                <th scope="col">Total Anggota</th>
+                                                <th scope="col">Total Hadir</th>
+                                                <th scope="col">Total Tidak Hadir</th>
+                                                <th scope="col">Keterangan</th>
+                                                <th scope="col">Operator</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php $no = 1; @endphp
+                                            @foreach ($tabelkegiatan as $index => $ev)
+                                                <tr wire:click="$set('selectedKegiatanId', {{ $ev->idkegiatan }})"
+                                                    class="{{ $selectedKegiatanId == $ev->idkegiatan ? 'bg-primary text-white' : '' }}">
+                                                    <th style="width:2%">{{ $index + 1 }}</th>
+                                                    <td>{{ $ev->tanggal_kegiatan }}</td>
+                                                    <td>{{ $ev->nama_kegiatan }}</td>
+                                                    <td>{{ $ev->jenis_kegiatan }}</td>
+                                                    <td>{{ currency_IDR($ev->denda) }}</td>
+                                                    <td>{{ currency_IDR($ev->total_denda) }}</td>
+                                                    <td>{{ $ev->total_anggota }}</td>
+                                                    <td>{{ $ev->total_hadir }}</td>
+                                                    <td>{{ $ev->total_tidak_hadir }}</td>
+                                                    <td>{{ $ev->keterangan }}</td>
+                                                    <td>{{ $ev->user }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <button wire:click="downloadPDF" class="btn btn-success">Unduh Laporan PDF</button>
+                <p class="text-center">DATA DETAIL AKAN MUNCUL DI BAWAH SETALAH DATA KEGIATAN DI KLIK</p>
                     <!-- Tabel Detail Presensi -->
                 @if($selectedKegiatanId) <!-- Tampilkan jika ada ID kegiatan yang dipilih -->
                     <div class="x_content">
                         <div class="card">
-                            <h5 class="card-header text-white bg-success text-center">DATA DETAIL PRESENSI</h5>
+                            <h5 class="card-header text-white bg-primary text-center">DATA DETAIL PRESENSI</h5>
                             <div class="card-body">                           
                                 <table class="table table-striped">
                                     <thead>
