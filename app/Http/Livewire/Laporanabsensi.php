@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Livewire;
-
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Livewire\Component;
 use App\Models\TabelKegiatan;
 use App\Models\Absensi;
-use Barryvdh\DomPDF\Facade as PDF;
+
+
 use Livewire\WithPagination;
 
 class Laporanabsensi extends Component
@@ -21,10 +22,18 @@ class Laporanabsensi extends Component
 
         $detailPresensi = $this->getDetailPresensi();
 
-        // Menampilkan view dengan data
+        $belumBayarCounts = $tabelkegiatan->mapWithKeys(function ($kegiatan) {
+            $belumBayarCount = $kegiatan->absensis->filter(function($absensi) {
+                return $absensi->status === 'Belum Bayar';
+            })->count();
+            
+            return [$kegiatan->idkegiatan => $belumBayarCount];
+        });
+    
         return view('livewire.laporanabsensi', [
             'tabelkegiatan' => $tabelkegiatan,
             'detailPresensi' => $this->getDetailPresensi(),
+            'belumBayarCounts' => $belumBayarCounts, // Menambahkan data jumlah yang belum bayar
         ]);
     }
 
@@ -43,25 +52,10 @@ class Laporanabsensi extends Component
                 'status' => $absensi->anggota->status,
                 'presensi' => $absensi->presensi,
                 'denda' => $absensi->denda,
+                'statusaksi' => $absensi->status,
+                'tanggal_bayar' => $absensi->tanggal_bayar
             ];
         }) : [];
     }
-
-    public function downloadPDF()
-    {
-        // Get the data needed for the PDF
-        $tabelkegiatan = TabelKegiatan::find($this->selectedKegiatanId);
-        $detailPresensi = $this->getDetailPresensi();
-        
-        // Generate PDF using the view
-        $pdf = PDF::loadView('livewire.laporanabsensi-pdf', [
-            'tabelkegiatan' => $tabelkegiatan,
-            'detailPresensi' => $detailPresensi,
-        ]);
-
-        // Return the PDF for download
-        return $pdf->download('laporan_absensi_'.$tabelkegiatan->nama_kegiatan.'.pdf');
-    }
-
     
 }

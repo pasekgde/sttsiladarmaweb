@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @push('styles')
-    @livewireStyles
+    @livewireStyles    
 @endpush
 
 

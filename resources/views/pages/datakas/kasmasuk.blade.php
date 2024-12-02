@@ -5,7 +5,7 @@
 @endpush
 
 @push('scripts')
-    @livewireScripts
+    @livewireScripts 
     <script>
         document.addEventListener('DOMContentLoaded', ()=>{
                 document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {

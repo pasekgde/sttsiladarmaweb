@@ -41,7 +41,7 @@ class Kasin extends Component
     {
         $this->kodekas = $this->kodeKas();
         $this->jeniskas = 'Masuk';
-        $this->tglkas = Carbon::now()->format( 'm/d/Y' );
+        $this->tglkas = Carbon::now()->format('Y-m-d');
         $this->sumkasmasuk();
     }
     
@@ -59,6 +59,7 @@ class Kasin extends Component
 
         $this->validate( [
             'kodekas' => 'required',
+            'tglkas' => 'required',
             'jeniskas' => 'required',
             'keterangan' => 'required',
             'jumlah' => 'required',
@@ -69,7 +70,7 @@ class Kasin extends Component
             'jeniskas' => $this->jeniskas,
             'tglkas' => date( 'Y-m-d', strtotime( $this->tglkas ) ),
             'keterangan' => Str::ucfirst( $this->keterangan ),
-            'qty' => '',
+            'qty' => '-',
             'harga' => currencyIDRToNumeric( 0 ),
             'jumlah' => currencyIDRToNumeric( $this->jumlah ),
             'user' => $this->operator(),
@@ -86,7 +87,7 @@ class Kasin extends Component
         $this->idkas = $data->id;
         $this->kodekas = $data->kodekas;
         $this->jeniskas = $data->jeniskas;
-        $this->tglkas = date( 'm/d/Y', strtotime( $data->tglkas ) );
+        $this->tglkas = Carbon::parse($data->tglkas)->format('Y-m-d');
         $this->keterangan = $data->keterangan;
         $this->jumlah = currency_IDR( $data->jumlah );
         $this->editKas = true;
@@ -131,6 +132,11 @@ class Kasin extends Component
         $this->sumkasmasuk();
     }
 
+    public function cancel() {
+        $this->kosong();
+        $this->editKas = false;
+
+    }
 
     public function kodeKas() {
         $table = 'kas';

@@ -44,8 +44,18 @@
                             @endif
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">{{ __('Login') }}</button>
+                        <button type="submit" class="btn btn-primary w-100 mb-3">{{ __('Login') }}</button>
                     </form>
+
+                    <!-- Pemisah Antara Tombol Login dan Cek Denda -->
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <div class="separator-line" style="border-top: 1px solid #ddd; width: 80%;"></div>
+                    </div>
+
+                    <!-- Cek Denda Button -->
+                    <div class="text-center mt-3">
+                        <a href="{{ route('denda.check') }}" class="btn btn-outline-secondary w-100">{{ __('Cek Denda') }}</a>
+                    </div>
 
                     <div class="text-center mt-4">
                         <p class="text-muted small">{{ __('Don\'t have an account?') }} <a href="{{ route('register') }}" class="text-primary">{{ __('Sign up') }}</a></p>

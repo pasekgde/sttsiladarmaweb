@@ -188,8 +188,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Livewire\LivewireServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class
     ],
 
     /*
@@ -207,7 +206,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Livewire' => Livewire\Livewire::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class
 
     ])->toArray(),
 

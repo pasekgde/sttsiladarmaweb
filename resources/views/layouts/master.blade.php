@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>ST. SILA DHARMA</title>
-    
     <!-- Bootstrap CSS -->
     <link href="{{ asset('/Asset/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
@@ -18,7 +17,8 @@
     <!-- DataTables CSS -->
     <link href="{{ asset('/Asset/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
     <!-- SweetAlert2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <!-- Custom Theme Style -->
     <link href="{{ asset('/Asset/build/css/custom.min.css') }}" rel="stylesheet">
     
@@ -102,12 +102,14 @@
         </div>
 
         <!-- Footer -->
-        @include('layouts.footer') <!-- Footer content -->
+        @include('layouts.footer')
       </div>
     </div> 
   </body>
 
-  @stack('scripts') <!-- This is for additional scripts pushed by specific pages -->
+  @stack('scripts')
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- jQuery -->
   <script src="{{ asset('/Asset/vendors/jquery/dist/jquery.min.js') }}"></script>

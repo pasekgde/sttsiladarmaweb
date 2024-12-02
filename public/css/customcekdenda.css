@@ -1,0 +1,90 @@
+/* Menyembunyikan elemen hasil pencarian sebelum ada denda */
+.hide {
+    display: none;
+}
+
+/* Mengatur posisi Flexbox agar form dan hasilnya berdekatan */
+.form-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Menjaga agar form pencarian tetap berada di tengah */
+.card-container {
+    position: relative;
+    width: 1000px;
+    max-width: 600px;
+    transition: opacity 0.3s ease;
+}
+
+/* Hasil pencarian muncul setelah form cari hilang */
+.result-container {
+    position: absolute;
+    top: 0;  /* Letakkan di atas form cari */
+    left: 0;
+    width: 100%;  /* Menyesuaikan lebar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    z-index: 2;
+    display: none;
+    transition: opacity 0.5s ease;
+}
+
+/* Tampilkan form hasil jika ada denda */
+.result-container.show {
+    display: block;
+}
+
+/* Spinner untuk loading */
+.spinner-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    justify-content: center;  /* Memastikan spinner berada di tengah secara horizontal */
+    align-items: center;   
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1000;  /* Pastikan spinner berada di atas konten lainnya */
+    
+}
+
+.spinner-container.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Styling spinner */
+.spinner {
+    border: 8px solid #f3f3f3;  /* Warna spinner background */
+    border-top: 8px solid #3498db;  /* Warna spinner */
+    border-radius: 50%;
+    width: 60px;  /* Ukuran spinner */
+    height: 60px;  /* Ukuran spinner */
+    animation: spin 2s linear infinite;  /* Kecepatan rotasi spinner */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Tombol kembali ke form pencarian */
+.btn-back {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #0056b3;
+}
+
+

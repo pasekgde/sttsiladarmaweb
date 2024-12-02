@@ -8,6 +8,31 @@
 @push('scripts')
     @livewireScripts
     <script>   
+        Livewire.on('successabsensi', data => {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+
+            // Menampilkan toast dengan data pesan dari Livewire
+            Toast.fire({
+                icon: 'success',
+                title: data.pesan,
+            }).then(() => {
+                // Setelah toast selesai ditampilkan, lakukan redirect
+                window.location.href = '{{ route("laporanabsensi") }}';
+            });
+        });
+    </script>
+
+    <script>   
         Livewire.on('success', data => {
             const Toast = Swal.mixin({
                 toast: true,
@@ -95,15 +120,19 @@
         }
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            flatpickr("#datepicker", {
-                dateFormat: "d/m/Y",
-                onChange: function(selectedDates, dateStr, instance) {
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#datepicker", {
+            dateFormat: "d/m/Y", // Format yang akan ditampilkan
+            onChange: function(selectedDates, dateStr, instance) {
+                // Format tanggal untuk disimpan (mengubahnya menjadi Y-m-d)
+                var formattedDate = flatpickr.formatDate(selectedDates[0], "Y-m-d");
+                document.getElementById('datepicker').value = formattedDate;
                 document.getElementById('datepicker').dispatchEvent(new Event('input')); // Trigger input event
-        }
-            });
+            }
         });
-    </script>
+    });
+</script>
+
     
     <script src="{{URL::asset('/Asset/vendors/jquery/dist/jquery.min.js')}}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">

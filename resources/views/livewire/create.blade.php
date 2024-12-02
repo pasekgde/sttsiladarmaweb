@@ -44,7 +44,7 @@
 
     QTY
     <div class="form-group">
-        <div class='input-group'>
+        <div class="input-group">
             <input type="number" wire:model="qty" wire:keyup.debounce.150ms="keyupjumlah"
                 class="form-control @error('qty') is-invalid @enderror">
             <span class="input-group-addon">
@@ -55,7 +55,7 @@
 
     Harga
     <div class="form-group">
-        <div class='input-group date'>
+        <div class="input-group">
             <input type="text" wire:model="harga" wire:keyup.debounce.150ms="keyupjumlah"
                 class="form-control @error('harga') is-invalid @enderror" type-currency="IDR">
             <span class="input-group-addon">
@@ -68,7 +68,7 @@
     <div class="form-group">
         <div class='input-group date'>
             <input type="text" wire:model="jumlah" class="form-control @error('jumlah') is-invalid @enderror"
-                type-currency="IDR">
+            value="{{ $jumlah }}" readonly>
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-usd"></span>
             </span>

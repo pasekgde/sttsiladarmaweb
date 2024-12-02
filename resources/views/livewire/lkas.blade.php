@@ -94,7 +94,11 @@
                     <td>{{$kas->jeniskas}}</td>
                     <td>{{$kas->keterangan}}</td>
                     <td>{{$kas->qty}}</td>
+                    @if($kas->harga != 0)
                     <td>{{$kas->harga}}</td>
+                    @else
+                    <td>-</td>
+                    @endif
                     <td>{{ currency_IDR($kas->jumlah) }}</td>
                     <td>{{$kas->user}}</td>
                 </tr>

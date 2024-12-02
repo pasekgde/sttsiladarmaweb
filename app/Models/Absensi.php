@@ -19,6 +19,7 @@ class Absensi extends Model
         return $this->belongsTo(Anggota::class, 'idanggota');
     }
 
+    protected $primaryKey = 'idabsensi';
 
 
     protected $table = 'absensis';
@@ -27,6 +28,8 @@ class Absensi extends Model
         'idkegiatan',
         'idanggota',
         'presensi',
-        'denda'
+        'denda',
+        'status',
+        'tanggal_bayar'
     ];
 }

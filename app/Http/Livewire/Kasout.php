@@ -41,7 +41,7 @@ class Kasout extends Component {
     public function mount() {
         $this->kodekas = $this->kodeKas();
         $this->jeniskas = 'Keluar';
-        //$this->tglkas = Carbon::now()->format( 'm/d/Y' );
+        $this->tglkas = Carbon::now()->format('Y-m-d');
         $this->sumkaskeluar();
     }
 
@@ -57,12 +57,13 @@ class Kasout extends Component {
 
         $this->validate( [
             'kodekas' => 'required',
+            'tglkas' => 'required',
             'jeniskas' => 'required',
             'keterangan' => 'required',
             'jumlah' => 'required',
         ] );
         $qtys = $this->qty;
-        if ( $qtys == '' ) {
+        if ($qtys === null || $qtys == 0) {
             $qtys = '-';
         }
 
@@ -92,7 +93,7 @@ class Kasout extends Component {
         $this->idkas = $data->id;
         $this->kodekas = $data->kodekas;
         $this->jeniskas = $data->jeniskas;
-        $this->tglkas = date( 'm/d/Y', strtotime( $data->tglkas ) );
+        $this->tglkas = Carbon::parse($data->tglkas)->format('Y-m-d');
         $this->keterangan = $data->keterangan;
         $this->qty = $data->qty;
         $this->harga = currency_IDR( $data->harga );
@@ -109,7 +110,7 @@ class Kasout extends Component {
             'jumlah' => 'required',
         ] );
         $qtys = $this->qty;
-        if ( $qtys == '' ) {
+        if ($qtys === null || $qtys == 0) {
             $qtys = '-';
         }
 
@@ -150,14 +151,25 @@ class Kasout extends Component {
     }
 
     public function keyupjumlah() {
-        $data1 = currencyIDRToNumeric( $this->harga );
-
-        if ( $this->harga == null ) {
-            $this->$data1 = 0;
+        // Mengubah harga menjadi angka (numeric)
+        $data1 = currencyIDRToNumeric($this->harga);
+    
+        // Mengecek jika harga kosong
+        if ($data1 === null || $data1 === 0) {
+            $this->jumlah = currency_IDR(0); // Jika harga kosong, set jumlah menjadi 0
+            return;
         }
-        $data2 = ( int )$data1*( int )$this->qty;
-        $this->jumlah = currency_IDR( $data2 );
+    
+        // Mengecek jika qty kosong
+        if (empty($this->qty) || $this->qty == 0) {
+            $this->jumlah = currency_IDR($data1); // Jika qty kosong, set jumlah menjadi harga * 1
+        } else {
+            // Jika qty terisi, hitung jumlah (harga * qty)
+            $data2 = (int) $data1 * (int) $this->qty;
+            $this->jumlah = currency_IDR($data2); 
+        }
     }
+    
 
     public function sumkaskeluar() {
         $sum = Kas::where( 'jeniskas', 'Keluar' )->sum( 'jumlah' );

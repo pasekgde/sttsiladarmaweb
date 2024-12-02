@@ -1,6 +1,6 @@
 <form wire:submit.prevent="update">
              @csrf
-            Kode Kas Masuk
+            Kode Kas Keluar
             <div class="form-group">
                 <div class='input-group date'>
                     <input type='text' wire:model="kodekas" class="form-control" id="#" name="kodekas" readonly>
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            Tanggal KAS Masuk
+            Tanggal KAS Keluar
             <div class="form-group">
                 <div class='input-group date'>
                     <input type='date' wire:model="tglkas" class="form-control @error('tglkas') is-invalid @enderror" name="tglkas" >

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+Route::get('/cek-denda', [App\Http\Controllers\CekdendaController::class, 'index'])->name('denda.check');
 
 Auth::routes();
 
@@ -81,6 +84,12 @@ Route::get('/absensi', [App\Http\Controllers\AbsensiController::class, 'index'])
 Route::get('/laporan-absensi', [App\Http\Controllers\LaporanabsensiController::class, 'index'])->name('laporanabsensi');
 
 // Route::get('/print-absensi', [App\Http\Controllers\PrintController::class, 'show'])->name('print.absensi');
+
+//laporan fomrdenda
+Route::get('/form-denda', [App\Http\Controllers\DendaCOntroller::class, 'index'])->name('formdenda');
+
+
+
 
 });
 

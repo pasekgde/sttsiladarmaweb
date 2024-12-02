@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Anggota extends Model
 {
     use HasFactory;
+
+    public function absensis()
+    {
+        return $this->hasMany(Absensi::class, 'idanggota');
+    }
+    
+    
     protected $table = 'anggota';
     protected $primaryKey = 'idanggota';
     protected $fillable = [

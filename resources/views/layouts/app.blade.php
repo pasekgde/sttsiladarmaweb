@@ -12,6 +12,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/customcekdenda.css') }}">
 
     <style>
         /* Styling for the Body to center the logo */
@@ -92,7 +93,9 @@ blockquote p {
     </style>
 
     <!-- Scripts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    @livewireStyles
 </head>
 <body>
 @include('sweetalert::alert')
@@ -149,6 +152,7 @@ blockquote p {
 
         <div class="clearfix"></div>
         @yield('content')
+    @livewireScripts
     </div>
 </body>
 </html>

@@ -8,6 +8,24 @@
 @push('scripts')
     @livewireScripts
     <script>
+        function formatRupiah(input) {
+            // Hapus karakter non-digit kecuali koma
+            let value = input.value.replace(/[^,\d]/g, '');
+            let [integer, decimal] = value.split(',');
+
+            // Format angka dengan titik setiap ribuan
+            let result = integer.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            if (decimal !== undefined) {
+                result += ',' + decimal;
+            }
+
+            // Tambahkan prefix 'Rp ' dan tampilkan hasilnya
+            input.value = 'Rp ' + result;
+        }
+    </script>
+    
+    <script>
 
         document.addEventListener('DOMContentLoaded', ()=>{
                 document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {

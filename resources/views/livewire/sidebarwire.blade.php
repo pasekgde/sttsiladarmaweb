@@ -34,7 +34,7 @@
                   <li><a><i class="fa fa-tags"></i> Kewajiban <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="#">Iuran Bulanan</a></li>
-                      <li><a href="#">Denda</a></li>
+                      <li><a href="/form-denda">Denda</a></li>
                       <li><a href="#">Penekelan</a></li>
                     </ul>
                   </li>

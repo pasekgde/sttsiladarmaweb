@@ -89,7 +89,7 @@ class Absensi extends Component
     public function submitForm()
     {
         $tabelkegiatan = TabelKegiatan::create( [
-            'tanggal_kegiatan' => date( 'Y-m-d', strtotime( $this->tanggal_kegiatan ) ),
+            'tanggal_kegiatan' => $this->tanggal_kegiatan ,
             'nama_kegiatan' => $this->nama_kegiatan,
             'jenis_kegiatan' => $this->jenis_kegiatan,
             'denda' => currencyIDRToNumeric( $this->denda ),
@@ -105,16 +105,20 @@ class Absensi extends Component
         foreach ($this->dataanggota as $index => $value) {
             // Tentukan denda berdasarkan pilihan presensi
             $denda = ($this->presensi[$index] == 'Hadir') ? 0 : currencyIDRToNumeric($this->denda);
-    
+
+            // Tentukan status berdasarkan pilihan presensi
+            $status = ($this->presensi[$index] == 'Hadir') ? '-' : 'Belum Bayar';
+
             // Simpan data ke Presensis
             Presensis::create([
                 'idanggota' => $value['idanggota'],
                 'idkegiatan' => $tabelkegiatan->idkegiatan,
                 'presensi' => $this->presensi[$index],
                 'denda' => $denda, // Gunakan nilai denda yang sudah dihitung
+                'status' => $status, // Menyimpan status berdasarkan presensi
             ]);
         }
-        $this->emit( 'success', [ 'pesan'=>'Absensi Sudah Tersimpan' ] );
+        $this->emit( 'successabsensi', [ 'pesan'=>'Absensi Sudah Tersimpan' ] );
         $this->clearForm();
         $this->denda  = str_replace(['Rp', '.', ' '], '', $this->denda);
     }
