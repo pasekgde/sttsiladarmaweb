@@ -48,8 +48,9 @@
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
                                     <select class="form-control @error('status', 'post') is-invalid @enderror" name="status" value="{{ old('status') }}" required="required">
+                                        <option>Superadmin</option>
+                                        <option>Ketua</option>
                                         <option>Pengurus</option>
-                                        <option>Angota</option>
                                         <option>Panitia</option>
                                     </select>
                                 </div>

@@ -2,12 +2,26 @@
 
 @push('styles')
     @livewireStyles
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endpush
 
 
 @push('scripts')
     @livewireScripts
-    <script>   
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            Livewire.on('closeModal', () => {
+                $('#createKegiatanModal').modal('hide'); // Gunakan jQuery untuk menutup modal
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr("#tglpembuatan", {
+                dateFormat: "d/m/Y", // Format tanggal sesuai kebutuhan
+            });
+        });
+
         Livewire.on('success', data => {
             const Toast = Swal.mixin({
                 toast: true,
@@ -28,7 +42,7 @@
         });
 
         Livewire.on('focuss', data => {
-            document.querySelector('#tglpembuatan').focus()
+            document.querySelector('#namakegiatan').focus()
         });  
 
         Livewire.on('hapus', data => {
@@ -54,7 +68,25 @@
             })
         });
 
+        Livewire.on('kegiatan', data => {
+            Swal.fire({
+                title: data.pesan,
+                text: data.text,
+                icon: data.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Simpan ke KASIN'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    livewire.emit('kegiatankirimkekasinconfirm');
+                }
+            })
+        }); 
+
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{URL::asset('/Asset/vendors/jquery/dist/jquery.min.js')}}"></script>
 @endpush
 
 
@@ -74,14 +106,5 @@
     
     </div>
 </div>
-        <script src="{{URL::asset('/Asset/vendors/jquery/dist/jquery.min.js')}}"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-         
-                
-
-              
-
-
 
 @endsection

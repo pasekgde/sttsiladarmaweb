@@ -4,16 +4,6 @@
 <form wire:submit.prevent="store">
 @endif
                     @csrf
-                    Kode Event
-                    <div class="form-group">
-                        <div class='input-group date'>
-                            <input type='text' class="form-control" wire:model="kodeevent" readonly>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </span>
-                        </div>
-                    </div>
-
                     Nama Kegiatan
                     <div class="form-group">
                         <div class='input-group date'>
@@ -81,17 +71,20 @@
                     <div class="form-group">
                         <div class='input-group date'>
                             <input type="text" wire:model="jumlah" class="form-control @error('jumlah') is-invalid @enderror"
-                                type-currency="IDR">
+                            value="{{ $jumlah }}" readonly>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-usd"></span>
                             </span>
                         </div>
                     </div>
-                    @if($formedit)
-                        <button type="submit" wire:click="focus" wire:keydown.enter="focus" class="btn btn-success">Update</button>
-                        <button type="button" wire:click.prevent="cancel()" class="btn btn-danger">Batal</button>
+                    @if($statuskegiatan == 'Belum')
+                        @if($formedit)
+                            <button type="submit" wire:click="focus" wire:keydown.enter="focus" class="btn btn-success">Update</button>
+                            <button type="button" wire:click.prevent="cancel()" class="btn btn-danger">Batal</button>
+                        @else
+                            <button type="submit" class="btn btn-success">Tambah</button>
+                        @endif
                     @else
-                        <button type="submit" class="btn btn-success">Tambah</button>
                     @endif
                 </form>
                 

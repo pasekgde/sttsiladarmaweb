@@ -2,6 +2,15 @@
 
 @push('styles')
     @livewireStyles
+    <style>
+        .table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #343a40; /* Warna latar belakang untuk header */
+    color: white; /* Warna teks untuk header */
+    z-index: 1; /* Agar tetap di atas saat scroll */
+}
+        </style>
 @endpush
 
 

@@ -63,8 +63,8 @@ class Kasout extends Component {
             'jumlah' => 'required',
         ] );
         $qtys = $this->qty;
-        if ($qtys === null || $qtys == 0) {
-            $qtys = '-';
+        if ($qtys == null || $qtys == 0) {
+            $qtys = '';
         }
 
         $hargas = $this->harga;

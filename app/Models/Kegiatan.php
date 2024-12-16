@@ -15,8 +15,13 @@ class Kegiatan extends Model
         'tglpembuatan',
         'namakegiatan',
         'deskripsi',
+        'kasmasuk',
+        'kaskeluar',
+        'saldo',
         'user',
         'created_at',
-        'update_at'
+        'update_at',
+        'pengguna',
+        'status'
     ];
 }

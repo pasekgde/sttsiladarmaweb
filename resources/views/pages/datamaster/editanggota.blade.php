@@ -54,6 +54,7 @@
                                         <option value="{{$data->pekerjaan}}" selected>{{$data->pekerjaan}}</option>
                                         <option>SMP</option>
                                         <option>SMA/SMK</option>
+                                        <option>Mahasiswa</option>
                                         <option>Bekerja</option>
                                         @endif
                                     </select>

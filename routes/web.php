@@ -88,7 +88,8 @@ Route::get('/laporan-absensi', [App\Http\Controllers\LaporanabsensiController::c
 //laporan fomrdenda
 Route::get('/form-denda', [App\Http\Controllers\DendaCOntroller::class, 'index'])->name('formdenda');
 
-
+//laporan iuran
+Route::get('/iuran-wajib', [App\Http\Controllers\IuranController::class, 'index'])->name('iuranwajib');
 
 
 });

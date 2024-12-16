@@ -51,6 +51,7 @@
                                         <option></option>
                                         <option>SMP</option>
                                         <option>SMA/SMK</option>
+                                        <option>Mahasiswa</option>
                                         <option>Bekerja</option>
                                     </select>
                                 </div>

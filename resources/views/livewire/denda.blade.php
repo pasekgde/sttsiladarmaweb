@@ -12,11 +12,11 @@
                     <div class="x_content">
                         <div class="card">
                             <h5 class="card-header text-white bg-success text-center">DATA KEGIATAN PRESENSI</h5>
-                            <div class="card-body"><!-- Total Denda di pojok kanan atas -->
+                            <div class="card-body">
                                 <div style="max-height: 700px; overflow-y: auto; display: block;">
-                                    <table class="table">
-                                        <thead class="thead-fixed">
-                                            <tr>
+                                    <table class="table table-bordered" style="table-layout: fixed;">
+                                        <thead class="thead-fixed thead-dark">
+                                            <tr class="">
                                                 <th style="width:2%; text-align: center; vertical-align: middle;">#</th>
                                                 <th style="text-align: left; vertical-align: middle;">Nama Anggota STT</th>
                                                 <th style="text-align: center; vertical-align: middle;">Tempek</th>

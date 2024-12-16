@@ -15,7 +15,6 @@ class Formkegiatan extends Component
     public $formedit = false;
 
     public $idev;
-    public $kodeevent;
     public $kodekegiatan;
     public $namakegiatan;
     public $jeniskas;
@@ -44,12 +43,14 @@ class Formkegiatan extends Component
     public $sumkasmasuk;
     public $saldo;
 
+    public $statuskegiatan;
+
     public function mount()
     {
         $data = Kegiatan::find($this->postId);
-        $this->kodekegiatan = $data->id;
+        $this->kodekegiatan = $data->kodekegiatan;
         $this->namakegiatan = $data->namakegiatan;
-        $this->kodeevent = $this->kode();
+        $this->statuskegiatan = $data->status;
         $this->sumkaskeluar();
         $this->sumkasmasuk();
         $this->saldo();
@@ -58,13 +59,12 @@ class Formkegiatan extends Component
     public function render()
     {
         if (Auth::user()->status == "Panitia") {
-            $datakegiatan = Event::where('kodekegiatan',$this->postId)
+            $datakegiatan = Event::where('kodekegiatan',$this->kodekegiatan)
                                 ->orderby( 'tglkas', 'desc' )
-                                ->where('user', Auth::user()->name)
                                 ->where('keterangan', 'like', '%'.$this->search.'%')
                                 ->paginate( $this->perpage );
         } else {
-            $datakegiatan = Event::where('kodekegiatan',$this->postId)
+            $datakegiatan = Event::where('kodekegiatan',$this->kodekegiatan)
                                 ->orderby( 'tglkas', 'desc' )
                                 ->where('keterangan', 'like', '%'.$this->search.'%')
                                 ->paginate( $this->perpage );
@@ -76,7 +76,6 @@ class Formkegiatan extends Component
     public function store() {
 
         $this->validate( [
-            'kodeevent' => 'required',
             'tglkas' => 'required',
             'jeniskas' => 'required',
             'keterangan' => 'required',
@@ -85,8 +84,8 @@ class Formkegiatan extends Component
         ] );
 
         $qtys = $this->qty;
-        if ( $qtys == '' ) {
-            $qtys = '-';
+        if ( $qtys == ''|| $qtys == 0 ) {
+            $qtys = '';
         }
 
         $hargas = $this->harga;
@@ -95,7 +94,6 @@ class Formkegiatan extends Component
         }
 
         Event::create( [
-            'kodeevent' => $this->kode(),
             'kodekegiatan' => $this->kodekegiatan,
             'jeniskas'=>$this->jeniskas,
             'tglkas' => date( 'Y-m-d', strtotime( $this->tglkas ) ),
@@ -105,10 +103,18 @@ class Formkegiatan extends Component
             'jumlah' => currencyIDRToNumeric( $this->jumlah ),
             'user' => $this->operator(),
         ] );
-        $this->emit( 'success', [ 'pesan'=>'Sudah Tersimpan' ] );
+
         $this->sumkaskeluar();
         $this->sumkasmasuk();
         $this->saldo();
+
+        Kegiatan::where('kodekegiatan',$this->kodekegiatan)->update( [
+            'kasmasuk' => currencyIDRToNumeric($this->sumkasmasuk),
+            'kaskeluar' => currencyIDRToNumeric($this->sumkaskeluar),
+            'saldo' => currencyIDRToNumeric($this->saldo),
+        ] );
+
+        $this->emit( 'success', [ 'pesan'=>'Sudah Tersimpan' ] );
         $this->kosong();
         $this->focus();
     }
@@ -117,7 +123,6 @@ class Formkegiatan extends Component
 
         $data = Event::findOrFail( $id );
         $this->idev = $data->id;
-        $this->kodeevent = $data->kodeevent;
         $this->kodekegiatan = $data->kodekegiatan;
         $this->jeniskas = $data->jeniskas;
         $this->tglkas = date( 'm/d/Y', strtotime( $data->tglkas ) );
@@ -131,14 +136,13 @@ class Formkegiatan extends Component
 
     public function update() {
         $this->validate( [
-            'kodeevent' => 'required',
             'jeniskas' => 'required',
             'keterangan' => 'required',
             'jumlah' => 'required',
         ] );
         $qtys = $this->qty;
-        if ( $qtys == '' ) {
-            $qtys = '-';
+        if ( $qtys == ''|| $qtys == 0  ) {
+            $qtys = '';
         }
 
         $hargas = $this->harga;
@@ -148,7 +152,6 @@ class Formkegiatan extends Component
 
         $data = Event::findOrFail( $this->idev );
         $data->update( [
-            'kodeevent' => $this->kodeevent,
             'kodekegiatan' => $this->kodekegiatan,
             'jeniskas' => $this->jeniskas,
             'tglkas' => date( 'Y-m-d', strtotime( $this->tglkas ) ),
@@ -158,10 +161,18 @@ class Formkegiatan extends Component
             'jumlah' => currencyIDRToNumeric( $this->jumlah ),
             'user' => $this->operator(),
         ] );
-        $this->emit( 'success', [ 'pesan'=>'Sudah Terubah' ] );
+
         $this->sumkaskeluar();
         $this->sumkasmasuk();
         $this->saldo();
+
+        Kegiatan::where('kodekegiatan',$this->kodekegiatan)->update( [
+            'kasmasuk' => currencyIDRToNumeric($this->sumkasmasuk),
+            'kaskeluar' => currencyIDRToNumeric($this->sumkaskeluar),
+            'saldo' => currencyIDRToNumeric($this->saldo),
+        ] );
+        
+        $this->emit( 'success', [ 'pesan'=>'Sudah Terubah' ] );
         $this->kosong();
 
         //$this->sumkaskeluar();
@@ -176,31 +187,45 @@ class Formkegiatan extends Component
     }
 
     public function deletedata() {
-        Event::find( $this->idev )->delete();
+        Event::find($this->idev)->delete();
+
         $this->sumkaskeluar();
         $this->sumkasmasuk();
         $this->saldo();
-        $this->kodeevent = $this->kode();
-        //$this->sumkaskeluar();
+
+        Kegiatan::where('kodekegiatan',$this->kodekegiatan)->update( [
+            'kasmasuk' => currencyIDRToNumeric($this->sumkasmasuk),
+            'kaskeluar' => currencyIDRToNumeric($this->sumkaskeluar),
+            'saldo' => currencyIDRToNumeric($this->saldo),
+        ] );
+
     }
 
     public function sumkaskeluar() {
         if (Auth::user()->status == "Panitia") {
-             $sum = Event::where( 'jeniskas', 'Keluar' )->where('user', Auth::user()->name)->sum( 'jumlah' );
+             $sum = Event::where( 'jeniskas', 'Keluar' )
+                                                        ->where('kodekegiatan', $this->kodekegiatan )
+                                                        ->sum( 'jumlah' );
                             
              $this->sumkaskeluar = currency_IDR( $sum );
         } else {
-             $sum = Event::where( 'jeniskas', 'Keluar' )->sum( 'jumlah' );
+             $sum = Event::where( 'jeniskas', 'Keluar' )
+                            ->where('kodekegiatan', $this->kodekegiatan )
+                            ->sum( 'jumlah' );
              $this->sumkaskeluar = currency_IDR( $sum );
         }
     }
     public function sumkasmasuk() {
         if (Auth::user()->status == "Panitia") {
-            $sum = Event::where( 'jeniskas', 'Masuk' )->where('user', Auth::user()->name)->sum( 'jumlah' );
+            $sum = Event::where( 'jeniskas', 'Masuk' )
+                        ->where('kodekegiatan', $this->kodekegiatan )
+                        ->sum( 'jumlah' );
                         
             $this->sumkasmasuk = currency_IDR( $sum );
         } else {
-            $sum = Event::where( 'jeniskas', 'Masuk' )->sum( 'jumlah' );
+            $sum = Event::where( 'jeniskas', 'Masuk' )
+                        ->where('kodekegiatan', $this->kodekegiatan )
+                        ->sum( 'jumlah' );
             $this->sumkasmasuk = currency_IDR( $sum );
         }
     }
@@ -212,22 +237,42 @@ class Formkegiatan extends Component
     }
 
     public function keyupjumlah() {
-        $data1 = currencyIDRToNumeric( $this->harga );
-
-        if ( $this->harga == null ) {
-            $this->$data1 = 0;
+        // Mengubah harga menjadi angka (numeric)
+        $data1 = currencyIDRToNumeric($this->harga);
+    
+        // Mengecek jika harga kosong
+        if ($data1 === null || $data1 === 0) {
+            $this->jumlah = currency_IDR(0); // Jika harga kosong, set jumlah menjadi 0
+            return;
         }
-        $data2 = ( int )$data1*( int )$this->qty;
-        $this->jumlah = currency_IDR( $data2 );
+    
+        // Mengecek jika qty kosong
+        if (empty($this->qty) || $this->qty == 0) {
+            $this->jumlah = currency_IDR($data1); // Jika qty kosong, set jumlah menjadi harga * 1
+        } else {
+            // Jika qty terisi, hitung jumlah (harga * qty)
+            $data2 = (int) $data1 * (int) $this->qty;
+            $this->jumlah = currency_IDR($data2); 
+        }
     }
 
-    public function kode() {
-        $table = 'events';
-        $primary = 'kodeevent';
-        $prefix = 'EVN';
-        $kodeevents = AutoKegiatan::autonumber( $table, $primary, $prefix);
-        return $kodeevents;
-    }
+    // public function keyupjumlah() {
+    //     $data1 = currencyIDRToNumeric( $this->harga );
+
+    //     if ( $this->harga == null ) {
+    //         $this->$data1 = 0;
+    //     }
+    //     $data2 = ( int )$data1*( int )$this->qty;
+    //     $this->jumlah = currency_IDR( $data2 );
+    // }
+
+    // public function kode() {
+    //     $table = 'events';
+    //     $primary = 'kodeevent';
+    //     $prefix = 'EVN';
+    //     $kodeevents = AutoKegiatan::autonumber( $table, $primary, $prefix);
+    //     return $kodeevents;
+    // }
 
     public function operator() {
         $operator = Auth::user()->name;
@@ -236,7 +281,6 @@ class Formkegiatan extends Component
 
     public function kosong()
     {
-        $this->kodeevent = $this->kode();
         $this->keterangan = NULL;
         $this->qty = NULL;
         $this->harga = NULL;

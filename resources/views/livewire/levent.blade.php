@@ -72,10 +72,9 @@
             </div>
         </div>
         <table class="table table-striped table-bordered table-responsive table-hover" style="width:100%">
-            <thead>
+            <thead class="table-dark text-center">
                 <tr style="text-align: center">
                     <th scope="col" sty>No</th>
-                    <th scope="col">Kode Kas</th>
                     <th scope="col">Tgl Kas</th>
                     <th scope="col">Jenis kas</th>
                     <th scope="col">Keterangan</th>
@@ -89,11 +88,14 @@
                 @foreach($datakas as $index => $kas)
                 <tr>
                     <td style="width:2%">{{$datakas->firstItem() + $index}}</td>
-                    <td>{{$kas->kodeevent}}</td>
                     <td>{{$kas->tglkas}}</td>
                     <td>{{$kas->jeniskas}}</td>
                     <td>{{$kas->keterangan}}</td>
-                    <td>{{$kas->qty}}</td>
+                    @if ($kas->qty == '' || $kas->qty == 0)
+                        <td>-</td>
+                    @else
+                        <td>{{$kas->qty}}</td>
+                    @endif
                     <td>{{ currency_IDR($kas->harga)}}</td>
                     <td>{{ currency_IDR($kas->jumlah) }}</td>
                     <td>{{$kas->user}}</td>

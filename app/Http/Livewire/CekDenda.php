@@ -14,59 +14,61 @@ class CekDenda extends Component
     public $loading = false;
     public $absensi = [];
     public $anjing = false;
+    public $bangsat = true;
     public $statusLunas = false; // Menambahkan properti untuk status lunas
     public $tidakAdaDenda = false;
     public $anggota;
 
     public function cekDenda()
-{
-    // Set loading menjadi true
-    $this->loading = true;
-    $this->denda = null; // Reset denda sebelum pencarian dimulai
-    $this->totalDenda = 0;
-    $this->statusLunas = false;  // Reset status lunas
-    $this->tidakAdaDenda = false; // Reset flag tidak ada denda
+    {
+        // Set loading menjadi true
+        $this->loading = true;
+        $this->denda = null; // Reset denda sebelum pencarian dimulai
+        $this->totalDenda = 0;
+        $this->statusLunas = false;  // Reset status lunas
+        $this->tidakAdaDenda = false; // Reset flag tidak ada denda
 
-    // Simulasi delay untuk loading
-    sleep(2); // Simulasikan proses pencarian atau query database
+        // Simulasi delay untuk loading
+        sleep(2); // Simulasikan proses pencarian atau query database
 
-    // Validasi input
-    $this->validate([
-        'nama' => 'required|string|max:255',
-    ]);
+        // Validasi input
+        $this->validate([
+            'nama' => 'required|string|max:255',
+        ]);
 
-    // Mencari anggota berdasarkan nama
-    $inputNama = strtoupper($this->nama); // Mengubah input nama menjadi huruf besar
-    $this->anggota = Anggota::where('nama', 'like', '%' . $inputNama . '%')->first();
+        // Mencari anggota berdasarkan nama
+        $inputNama = strtoupper($this->nama); // Mengubah input nama menjadi huruf besar
+        $this->anggota = Anggota::where('nama', 'like', '%' . $inputNama . '%')->first();
 
-    if ($this->anggota) {
-        // Ambil data absensi anggota yang tidak hadir
-        $this->absensi = Absensi::with('kegiatan')
-            ->where('idanggota', $this->anggota->idanggota)
-            ->where('status', 'Belum Bayar')
-            ->get();
-        $this->totalDenda = $this->absensi->sum('denda');
+        if ($this->anggota) {
+            // Ambil data absensi anggota yang tidak hadir
+            $this->absensi = Absensi::with('kegiatan')
+                ->where('idanggota', $this->anggota->idanggota)
+                ->where('status', 'Belum Bayar')
+                ->get();
+            $this->totalDenda = $this->absensi->sum('denda');
 
-        if ($this->absensi->isEmpty()) {
-            $this->tidakAdaDenda = true; // Menandakan tidak ada denda
+            if ($this->absensi->isEmpty()) {
+                $this->tidakAdaDenda = true; // Menandakan tidak ada denda
+            } else {
+                // Menghitung total denda
+                $this->totalDenda = $this->absensi->sum('denda'); // Menjumlahkan semua denda
+
+                // Periksa apakah anggota sudah lunas
+                $this->statusLunas = $this->absensi->every(function($absen) {
+                    return $absen->is_lunas;  // Cek apakah semua absensi sudah lunas
+                });
+            }
         } else {
-            // Menghitung total denda
-            $this->totalDenda = $this->absensi->sum('denda'); // Menjumlahkan semua denda
-
-            // Periksa apakah anggota sudah lunas
-            $this->statusLunas = $this->absensi->every(function($absen) {
-                return $absen->is_lunas;  // Cek apakah semua absensi sudah lunas
-            });
+            // Jika anggota tidak ditemukan
+            $this->absensi = collect(); // Kosongkan hasil jika anggota tidak ditemukan
         }
-    } else {
-        // Jika anggota tidak ditemukan
-        $this->absensi = collect(); // Kosongkan hasil jika anggota tidak ditemukan
+        
+        $this->anjing =true;
+        $this->bangsat =false;
+        // Set loading menjadi false setelah pencarian selesai
+        $this->loading = false;
     }
-    
-    $this->anjing =true;
-    // Set loading menjadi false setelah pencarian selesai
-    $this->loading = false;
-}
 
 
     public function resetForm()

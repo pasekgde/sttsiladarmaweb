@@ -3,7 +3,7 @@
         <div class="form-container">
             
             <!-- Card Form Pencarian -->
-            <div class="card card-container shadow-lg rounded-4 @if($denda || $loading) hide @endif">
+            <div class="card card-container shadow-lg rounded-4">
                 <div class="card-body p-5 position-relative">
                     <a href="#" wire:click="redirectToLogin" class="position-absolute top-0 start-0 ms-3 mt-3">
                         <i class="bi bi-arrow-left-circle" style="font-size: 1.5rem; color: #007bff;"></i>

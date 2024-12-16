@@ -70,7 +70,7 @@ class Kasin extends Component
             'jeniskas' => $this->jeniskas,
             'tglkas' => date( 'Y-m-d', strtotime( $this->tglkas ) ),
             'keterangan' => Str::ucfirst( $this->keterangan ),
-            'qty' => '-',
+            'qty' => '',
             'harga' => currencyIDRToNumeric( 0 ),
             'jumlah' => currencyIDRToNumeric( $this->jumlah ),
             'user' => $this->operator(),

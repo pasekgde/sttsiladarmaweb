@@ -49,19 +49,20 @@
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
                                     <select class="form-control @error('status', 'post') is-invalid @enderror" name="status" value="{{$dataedit->status}}" required="required">
+                                        <option>Superadmin</option>
+                                        <option>Ketua</option>
                                         <option>Pengurus</option>
-                                        <option>Angota</option>
                                         <option>Panitia</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="ln_solid"></div>
-                            <div class="item form-group">
-                                <div class="col-md-6 col-sm-6 offset-md-3">
-                                    <a href="/" class="btn btn-primary">Cancel</button>
-                                    <button type="submit" class="btn btn-success">Tambah</button>
+                                <div class="item form-group">
+                                    <div class="col-md-6 col-sm-6 offset-md-3">
+                                        <a href="/" class="btn btn-primary">Cancel</a>
+                                        <button type="submit" class="btn btn-success">Tambah</button>
+                                    </div>
                                 </div>
-                            </div>
                         </form>    
 
 

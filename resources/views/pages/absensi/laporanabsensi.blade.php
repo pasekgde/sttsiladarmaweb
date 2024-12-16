@@ -8,6 +8,18 @@
 @push('scripts')
     @livewireScripts
     <script>   
+        document.addEventListener('livewire:load', function () {
+        // Mendengarkan event 'showModal' yang dipicu dari Livewire
+            Livewire.on('showModal', () => {
+                // Menampilkan modal menggunakan Bootstrap 4/5
+                $('#detailPresensiModal').modal('show');
+            });
+        });
+
+        document.addEventListener('closeModal', function () {
+            $('#detailPresensiModal').modal('hide');
+        });
+
         Livewire.on('success', data => {
             const Toast = Swal.mixin({
                 toast: true,

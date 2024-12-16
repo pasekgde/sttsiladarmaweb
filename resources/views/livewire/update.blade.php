@@ -62,9 +62,10 @@
             Total
             <div class="form-group">
                 <div class='input-group date'>
-                    <input type="text" wire:model="jumlah" class="form-control @error('jumlah') is-invalid @enderror" type-currency="IDR">
+                    <input type="text" wire:model="jumlah" class="form-control @error('jumlah') is-invalid @enderror"
+                    value="{{ $jumlah }}" readonly>
                     <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-usd"></span>
+                        <span class="glyphicon glyphicon-usd"></span>
                     </span>
                 </div>
             </div>

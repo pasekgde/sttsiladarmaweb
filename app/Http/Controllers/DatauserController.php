@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Kegiatan;
 Use Alert;
 
 class DatauserController extends Controller
@@ -18,7 +19,8 @@ class DatauserController extends Controller
 
     public function create()
     {
-        return view('pages.datamaster.createdatauser');
+        $datakegiatan = Kegiatan::all();
+        return view('pages.datamaster.createdatauser',compact('datakegiatan'));
     }
 
     public function store(Request $request)

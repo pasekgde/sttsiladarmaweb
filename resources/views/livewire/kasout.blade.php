@@ -62,9 +62,13 @@
                                             <td>{{$kaskeluar->tglkas}}</td>
                                             <td>{{$kaskeluar->jeniskas}}</td>
                                             <td>{{$kaskeluar->keterangan}}</td>
+                                            @if($kaskeluar->qty == "")
+                                                <td>-</td>
+                                            @else
                                             <td>{{$kaskeluar->qty}}</td>
-                                            <td>{{ currency_IDR($kaskeluar->harga) }}</td>
-                                            <td>{{ currency_IDR($kaskeluar->jumlah) }}</td>
+                                            @endif
+                                            <td>{{ $kaskeluar->harga }}</td>
+                                            <td>{{ $kaskeluar->jumlah }}</td>
                                             <td>{{$kaskeluar->user}}</td>
                                             <td style="text-align:center">
                                                 <a href="#" wire:click="edit({{$kaskeluar->id}})" style="color:blue"><i class="fa fa-pencil"></i> Edit </a>&nbsp&nbsp&nbsp

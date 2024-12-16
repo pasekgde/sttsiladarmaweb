@@ -1,82 +1,130 @@
 <div>
 
-    <div class="col-md-3 col-sm-3  ">
-        <div class="x_panel">
-            <div class="x_title">
 
-                <h2>Buat Baru Data kas</h2>
-            
-            <div class="clearfix"></div>
-            @include('livewire.createkegiatan')
-        </div>
-    </div>
-</div>
-
-    <div class="col-md-9 col-sm-9  ">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Data Kegiatan</h2>
-                    
-                        <div class="clearfix"></div>
+        <div class="row">
+            <!-- Data Kegiatan -->
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Data Kegiatan</h5>
                     </div>
-
-                    <div class="">
-                        <select id="cars" class="form-control col-sm-1" wire:model="perpage">
-                            <option value="10">10</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                        <div class="form-group pull-right top_search float-right">
-                            <div class="input-group ">
-                                <input type="text" wire:model="searchTerm" class="form-control" placeholder="Search for...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="button">Go!</button>
-                                </span>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createKegiatanModal">
+                                    Tambah Kegiatan
+                                </button>
+                            </div>
+                            <!-- Dropdown for Per Page -->
+                            <div class="col-auto">
+                                <select id="perpage" class="form-select form-control" wire:model="perpage">
+                                    <option value="10">10</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <!-- Search Bar -->
+                            <div class="col">
+                                <div class="input-group">
+                                    <input type="text" wire:model="searchTerm" class="form-control" placeholder="Search for...">
+                                    <button class="btn btn-primary" type="button">Go</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                        <!-- <a href="createkasmasuk" class="btn btn-success"><i class="fa fa-plus-square">  Tambah Data</i></a> -->
-                                <table id="#" class="table table-striped table-bordered table-responsive table-hover" style="width:100%">
-                                    <thead>
-                                        <tr style="text-align: center">
-                                            <th scope="col">No</th>
-                                            <th scope="col">Kode Kegiatan</th>
-                                            <th scope="col">Tgl Pembuatan</th>
-                                            <th scope="col">Nama Kegiatan</th>
-                                            <th scope="col">Deskripsi</th>
-                                            <th scope="col">User</th>
-                                            <th scope="col">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($datakegiatan as $index => $kegiatan)
+
+                        <!-- Table Data -->
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered align-middle text-center">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th style="text-align: center; vertical-align: middle; width: 2%;">No</th>
+                                        <th style="text-align: center; vertical-align: middle; width: 4%;">Kode Kegiatan</th>
+                                        <th style="text-align: center; vertical-align: middle; width: 5%;">Tgl Pembuatan</th>
+                                        <th style="text-align: center; vertical-align: middle; width: 13%;">Nama Kegiatan</th>
+                                        <th style="text-align: center; vertical-align: middle; width: 13%;">Deskripsi</th>
+                                        <th style="text-align: center; vertical-align: middle; width: 5%;">User</th>
+                                        <th style="text-align: center; vertical-align: middle; width: 10%;">Hak Akses</th>
+                                        <th style="text-align: center; vertical-align: middle; width: 16%;">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($datakegiatan as $index => $kegiatan)
                                         <tr>
-                                            <td style="width:2%">{{$datakegiatan->firstItem() + $index}}</td>
-                                            <td>{{$kegiatan->kodekegiatan}}</td>
-                                            <td>{{$kegiatan->tglpembuatan}}</td>
-                                            <td>{{$kegiatan->namakegiatan}}</td>
-                                            <td>{{$kegiatan->deskripsi}}</td>
-                                            <td>{{$kegiatan->user}}</td>
-                                            <td style="text-align:center">
-                                                <a href="#" wire:click="edit({{$kegiatan->id}})" style="color:blue"><i class="fa fa-pencil"></i> Edit </a>&nbsp&nbsp&nbsp
-                                                <a href="#" wire:click.prevent="destroypesan({{$kegiatan->id}})" data-name="" data-id="" style="color:red"><i class="fa fa-trash-o"></i> Delete </a>
+                                            <td style="text-align: center; vertical-align: middle;">{{ $datakegiatan->firstItem() + $index }}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{{ $kegiatan->kodekegiatan }}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{{ $kegiatan->tglpembuatan }}</td>
+                                            <td style="text-align: left; vertical-align: middle;">{{ $kegiatan->namakegiatan }}</td>
+                                            <td style="text-align: left; vertical-align: middle;">{{ $kegiatan->deskripsi }}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{{ $kegiatan->user }}</td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                @if($kegiatan->pengguna) 
+                                                    @if(count($kegiatan->user_names) > 1)
+                                                        @foreach($kegiatan->user_names as $index => $userName)
+                                                            {{ $userName }}{{ $loop->last ? '' : ',' }}
+                                                        @endforeach
+                                                    @else
+                                                        {{ $kegiatan->user_names[0] ?? '-' }}
+                                                    @endif
+                                                @else
+                                                    - <!-- Jika pengguna kosong -->
+                                                @endif
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                @if($kegiatan->status == 'Belum')
+                                                    <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#createKegiatanModal" wire:click="edit({{ $kegiatan->id }})">
+                                                        <i class="fa fa-pencil"></i> Edit
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-danger" wire:click.prevent="destroypesan({{ $kegiatan->id }})">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-primary" wire:click.prevent="yakinselesai({{ $kegiatan->id }})">
+                                                        <i class="fa fa-download"></i> Selesai & Kirim KASIN
+                                                    </a>
+                                                @else
+                                                    <a href="#" class="btn btn-sm btn-danger" wire:click.prevent="destroypesan({{ $kegiatan->id }})">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-secondary">
+                                                        <i class="fa fa-checked"></i> Sudah Selesai
+                                                    </a>
+                                                @endif
                                             </td>
                                         </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                
-                            </div>
-                            <div class="float-left">
-                                    <p>{{ $datakegiatan->total() }} Item Rows</p>
-                                </div>
-                                <div class="float-right">
-                                    {{ $datakegiatan->links() }}
-                                </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination and Total Count -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <p class="mb-0">{{ $datakegiatan->total() }} Item Rows</p>
+                            <nav>
+                                {{ $datakegiatan->links() }}
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+
+    <!-- Modal -->
+    <div wire:ignore.self class="modal fade" id="createKegiatanModal" tabindex="-1" aria-labelledby="createKegiatanModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="createKegiatanModalLabel">Buat Baru Data Kas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @include('livewire.createkegiatan')
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
 
 

@@ -2,6 +2,16 @@
 
 @push('styles')
     @livewireStyles
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #343a40; /* Warna latar belakang untuk header */
+    color: white; /* Warna teks untuk header */
+    z-index: 1; /* Agar tetap di atas saat scroll */
+}
+        </style>
 @endpush
 
 
