@@ -4,28 +4,53 @@
 <div class="container">
     <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-lg-10">
-            <div class="card shadow-lg rounded-4">
+            <div class="card shadow-lg rounded-4" style="background-color: rgba(255, 255, 255, 0.8); border: 0;">
                 <div class="row g-0">
                     <!-- Left Section: Text and Logo -->
-                    <div class="col-md-5 d-flex flex-column align-items-center justify-content-center bg-light text-center p-4">
+                    <div class="col-md-5 d-flex flex-column align-items-center justify-content-center text-center p-4">
                         <!-- Title -->
-                        <h3 class="text-primary fw-bold mb-2" style="font-size: 2rem;">SIDARMA</h3>
-                        <p class="text-muted mb-3" style="font-size: 0.9rem; font-weight: 500;">Sistem Informasi STT Sila Darma</p>
+                        @if($data && $data->nama_sistem)
+                            <h3 class="text-primary fw-bold mb-2" style="font-size: 2rem;">{{$data->nama_sistem}}</h3>
+                        @else
+                            <h3 class="text-primary fw-bold mb-2" style="font-size: 2rem;">SIDARMA</h3>
+                        @endif
+
+                        @if($data && $data->subjudul)
+                            <p class="text-muted mb-3" style="font-size: 0.9rem; font-weight: 500;">{{$data->subjudul}}</p>
+                        @else
+                            <p class="text-muted mb-3" style="font-size: 0.9rem; font-weight: 500;">Sistem Informasi STT Sila Darma</p>
+                        @endif
 
                         <!-- Logo -->
                         <div class="mb-4">
+                            @if($data && $data->logo)
+                                <img src="{{ asset('storage/' . $data->logo) }}" width="150" alt="Logo STT Sila Dharma">
+                            @else
                             <img src="https://i.ibb.co.com/bNVPrX5/logo.png" width="150" alt="Logo STT Sila Dharma">
+                            @endif
                         </div>
 
                         <!-- Motto -->
-                        <p class="text-muted mb-4" style="font-size: 0.9rem; font-weight: 500;">
-                            Sagilik Saguluk, Salunglung Sabayantaka, Paras Paros Sarpanaya, Saling Asah Asih Asuh"
-                        </p>
+                        @if($data && $data->deskripsi1)
+                            <p class="text-muted mb-4" style="font-size: 0.9rem; font-weight: 500;">
+                                {{$data->deskripsi1}}
+                            </p>
+                        @else
+                            <p class="text-muted mb-4" style="font-size: 0.9rem; font-weight: 500;">
+                                "Sagilik Saguluk, Salunglung Sabayantaka, Paras Paros Sarpanaya, Saling Asah Asih Asuh"
+                            </p>
+                        @endif
 
                         <!-- Footer Text -->
-                        <p class="text-muted mb-0" style="font-size: 0.9rem;">
-                            &copy; 2024 Cempaga-Bangli
-                        </p>
+                        @if($data && $data->deskripsi2)
+                            <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                                &copy; {{$data->deskripsi2}}
+                            </p>
+                        @else
+                            <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                                &copy; 2024 Cempaga-Bangli
+                            </p>
+                        @endif
                     </div>
 
                     <!-- Right Section: Login Form -->
@@ -63,7 +88,7 @@
 
                         <!-- Cek Denda Button -->
                         <div class="text-center">
-                            <a href="{{ route('denda.check') }}" class="btn btn-outline-secondary w-100" style="font-size: 0.9rem;">{{ __('Cek Denda') }}</a>
+                            <a href="{{ route('denda.check') }}" class="btn btn-success w-100" style="font-size: 0.9rem;">{{ __('Cek Denda') }}</a>
                         </div>
                     </div>
                 </div>

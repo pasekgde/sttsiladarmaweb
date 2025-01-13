@@ -41,7 +41,7 @@
                           <ul class="nav child_menu">
                               <li><a href="/iuran-wajib">Iuran Bulanan</a></li>
                               <li><a href="/form-denda">Denda</a></li>
-                              <li><a href="#">Penekelan</a></li>
+                              <li><a href="/penekelan">Penekelan</a></li>
                           </ul>
                       </li>
                   @endif
@@ -58,6 +58,19 @@
                       </ul>
                   </li>
                 </ul>
+
+                @if (Auth::user()->status == "Superadmin")
+                <ul class="nav side-menu">
+                    <h3>PENGOLAHAN SUPERADMIN</h3>
+                    <li><a><i class="fa fa-book"></i> Setting <span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li><a href="/superadmin-sisteminfo"> Informasi dan Gambar</a></li>
+                              <li><a href="/superadmin-pengurusinfo"> Pengurus Inti</a></li>
+                              <li><a href="/superadmin-truncatedata"> Truncate Data !</a></li>
+                          </ul>
+                      </li>
+                </ul>
+                @endif
               </div>
 
             </div>

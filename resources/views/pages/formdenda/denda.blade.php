@@ -87,6 +87,29 @@
             })
         });
 
+        Livewire.on('pesanhitung', data => {
+            Swal.fire({
+                title: data.pesan,
+                text: data.text,
+                icon: data.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    livewire.emit('pesanhitungconfirm');
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Penikelan Diterapkan',
+                    text: 'Denda anggota sudah diperbaharui',
+                    showConfirmButton: false,
+                    timer: 3500
+                    });
+                }
+            })
+        });
+
     </script>
     <script> 
         document.addEventListener('DOMContentLoaded', ()=>{

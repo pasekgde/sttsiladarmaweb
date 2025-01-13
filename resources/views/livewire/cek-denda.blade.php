@@ -71,8 +71,30 @@
 
                                     <!-- Menampilkan Total Denda -->
                                     <div class="text-center mt-3">
-                                        <h4 style="color: red;">Total Denda: {{ number_format($totalDenda, 0, ',', '.') }}</h4>
+                                        <h4 style="color: red;">Total Denda: {{ number_format($totalDendaanggota, 0, ',', '.') }}</h4>
                                     </div>
+
+                                    @if($totalDendaanggota != 0)
+                                        <div class="alert alert-info">
+                                            <strong>Total Denda Awal: </strong>
+                                            <span class="fw-bold" style="font-size: 1.1em;">{{ currency_IDR($totalDenda) }}</span>
+                                            <br>
+                                            <strong>Sanksi Penikelan: </strong>
+                                            <span class="fw-bold" style="font-size: 1.1em;">{{ $nikelanggota }} kali</span>
+                                            <br>
+                                            <strong>Total Denda Setelah Sanksi: </strong>
+                                            <span class="fw-bold" style="font-size: 1.1em;">{{ currency_IDR($totalDendaanggota) }}</span>
+                                            <br>
+                                            <span style="font-size: 1em; font-style: italic;">
+                                                Sesuai dengan peraturan Awig-Awig STT Sila Dharma.
+                                            </span>
+                                        </div>
+                                    @else
+                                        <div class="alert alert-success">
+                                            <span class="fw-bold" style="font-size: 1.1em;">Terima Kasih</span> - 
+                                            <span>Anda sudah melunasi kewajiban denda.</span>
+                                        </div>
+                    @endif 
 
                                     <!-- Menampilkan Status Lunas -->
                                     @if($statusLunas)

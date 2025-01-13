@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Kas;
 use Livewire\WithPagination;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Pengurus;
 
 class Lkas extends Component
 {
@@ -101,18 +102,17 @@ class Lkas extends Component
 
     public function printkas()
     {
+        $namattd =$this->pengurus = Pengurus::first();
         if ($this->tglawal || $this->tglakhir && $this->tipekas) {
             $data = Kas::whereBetween('tglkas', [$this->tglawal, $this->tglakhir])
                             ->where('jeniskas', 'like', '%'. $this->tipekas .'%')
-                            ->where('keterangan', 'like', '%'. $this->search .'%')
-                            ->latest()->paginate($this->perpage);
+                            ->where('keterangan', 'like', '%'. $this->search .'%')->get();
             $this->sumkasmasuk();
             $this->sumkaskeluar();
             $this->saldo();
         } elseif ($this->tipekas=="Masuk") {
             $data = Kas::where('jeniskas', 'like', '%'. $this->tipekas .'%')
-                            ->where('keterangan', 'like', '%'. $this->search .'%')
-                            ->latest()->paginate($this->perpage);
+                            ->where('keterangan', 'like', '%'. $this->search .'%')->get();
             
             $summasuk = Kas::where( 'jeniskas', 'Masuk' )->sum( 'jumlah' );
                     $this->sumkasmasuk = currency_IDR( $summasuk );
@@ -122,8 +122,7 @@ class Lkas extends Component
             
         }elseif ($this->tipekas=="Keluar") {
             $data = Kas::where('jeniskas', 'like', '%'. $this->tipekas .'%')
-                            ->where('keterangan', 'like', '%'. $this->search .'%')
-                            ->latest()->paginate($this->perpage);
+                            ->where('keterangan', 'like', '%'. $this->search .'%')->get();
             
             $summasuk = 0;
                     $this->sumkasmasuk = currency_IDR( $summasuk );
@@ -132,7 +131,7 @@ class Lkas extends Component
                     $this->sumkaskeluar = currency_IDR( $sumkeluar );
         }else
         {
-            $data = Kas::latest()->search( trim( $this->search ) )->paginate($this->perpage);
+            $data = Kas::latest()->search( trim( $this->search ) )->get();
 
             $summasuk = Kas::where( 'jeniskas', 'Masuk' )->sum( 'jumlah' );
                     $this->sumkasmasuk = currency_IDR( $summasuk );
@@ -142,7 +141,7 @@ class Lkas extends Component
             $this->saldo();
         }
         
-        $pdf = PDF::loadView('livewire.pdfkas', ['data'=>$data,'summasuk'=>$this->sumkasmasuk,'sumkeluar'=>$this->sumkaskeluar,'saldo'=>$this->saldo, 'tipekas'=>$this->tipekas])->output();
+        $pdf = PDF::loadView('livewire.pdfkas', ['pengurus'=>$namattd,'data'=>$data,'summasuk'=>$this->sumkasmasuk,'sumkeluar'=>$this->sumkaskeluar,'saldo'=>$this->saldo, 'tipekas'=>$this->tipekas])->output();
  
         return response()->streamDownload(
             fn () => print($pdf),

@@ -27,9 +27,12 @@
     <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
     
     @stack('styles') <!-- This is for additional styles pushed by specific pages -->
+    <style>
+      
+      </style>
   </head>
 
-  <body class="nav-md">
+  <body class="nav-md footer_fixed">
     @include('sweetalert::alert') <!-- SweetAlert -->
 
     <div class="container body">
@@ -38,7 +41,11 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="/" class="site_title"><span>ST. SILA DHARMA</span></a>
+            @if($data && $data->organisasi)
+              <a href="/" class="site_title"><span>{{$data->organisasi}}</span></a>
+            @else
+              <a href="/" class="site_title"><span>STT. SILA DHARMA</span></a>
+            @endif
             </div>
 
             <div class="clearfix"></div>
@@ -46,8 +53,11 @@
             <!-- Profile Section -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <!-- Ensure the image link is correct -->
-                <img src="https://i.ibb.co.com/jzD7kYm/logo.png" alt="Logo" class="img-circle profile_img">
+              @if($data && $data->logo)
+                  <img src="{{ asset('storage/' . $data->logo) }}" alt="Logo" class="img-circle profile_img">
+              @else
+                  <img src="https://i.ibb.co.com/jzD7kYm/logo.png" alt="Default Logo" class="img-circle profile_img">
+              @endif
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
@@ -73,8 +83,8 @@
             <nav class="nav navbar-nav">
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="https://i.ibb.co.com/jzD7kYm/logo.png" alt="Profile">{{ Auth::user()->name }}
+                  <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false"> 
+                      <h10 alt="Profile">{{ Auth::user()->name }}</h10>
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="javascript:;">Profile</a>
@@ -102,7 +112,12 @@
         </div>
 
         <!-- Footer -->
-        @include('layouts.footer')
+        <footer>
+          <div class="pull-right">
+          &copy; 2024 Sistem Informasi STT Sila Dharma Cempaga All rights reserved. by <a href="https://colorlib.com">Pasek Gde</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
       </div>
     </div> 
   </body>

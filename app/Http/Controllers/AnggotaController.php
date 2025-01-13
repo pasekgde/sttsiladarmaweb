@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Anggota;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Alert;
 
 class AnggotaController extends Controller
@@ -13,6 +14,10 @@ class AnggotaController extends Controller
     public function index()
     {
         $dataanggota = Anggota::all();
+        foreach ($dataanggota as $anggota) {
+            // Menghitung umur berdasarkan tgllahir
+            $anggota->umur_sekarang = Carbon::parse($anggota->tgllahir)->age;
+        }
         return view('pages.datamaster.anggota', compact('dataanggota'));
     }
 
@@ -51,8 +56,8 @@ class AnggotaController extends Controller
 
     public function edit($id)
     {
-        $data = DB::table('anggota')->where('idanggota',$id)->first();
-        return view('pages.datamaster.editanggota', compact(['data']));
+        $datas = DB::table('anggota')->where('idanggota',$id)->first();
+        return view('pages.datamaster.editanggota', compact(['datas']));
         
     }
 

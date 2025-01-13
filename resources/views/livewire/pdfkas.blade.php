@@ -71,6 +71,80 @@
             font-family: "Arial", Helvetica, sans-serif !important;
         }
     </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            font-size: 14px; /* Smaller font size */
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 3px solid #000;
+        }
+
+        .header img {
+            width: 120px;
+        }
+
+        .header h1 {
+            font-size: 24px; /* Smaller and more elegant */
+            margin: 5px 0;
+        }
+
+        .header h2,
+        .header h3 {
+            margin: 2px 0;
+            font-weight: normal;
+            font-size: 16px; /* Adjusted size */
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .summary {
+            margin-bottom: 20px;
+        }
+
+        .summary table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .summary table th,
+        .summary table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            font-size: 14px; /* Smaller font */
+        }
+
+        .summary table th {
+            background-color: #f9f9f9;
+        }
+
+        .member-table {
+            margin-top: 20px;
+        }
+
+        /* Bootstrap Table Styling */
+        .table th, .table td {
+            font-size: 14px; /* Smaller font size */
+        }
+
+        /* Underline signature */
+        .signature {
+            display: block;
+            margin-top: 60px;
+            padding-top: 5px;
+            text-decoration: underline;
+        }
+    </style>
 
         <table width="100%">
             <tr>
@@ -151,6 +225,36 @@
             @endforeach
 
         </table>
+        <table style="width: 100%; margin-top: 50px; text-align: center; border-collapse: collapse;">
+            <tr>
+                <!-- Kolom Bendahara -->
+                <td style="width: 33%; text-align: center;">
+                    <p>Bendahara</p>
+                    <strong>TTD</strong> <!-- Menambahkan TTD di bawah tanda tangan -->
+                    <span class="signature">{{ $pengurus->bendahara ?? '' }}</span><br>
+                </td>
+
+                <!-- Kolom kosong untuk memisahkan -->
+                <td style="width: 33%;"></td>
+
+                <!-- Kolom Sekretaris -->
+                <td style="width: 33%; text-align: center;">
+                    <p>Sekretaris</p>
+                    <strong>TTD</strong> <!-- Menambahkan TTD di bawah tanda tangan -->
+                    <span class="signature">{{ $pengurus->sekretaris ?? '' }}</span><br>
+                </td>
+            </tr>
+            <tr>
+                <!-- Ketua di tengah bawah -->
+                <td colspan="3" style="padding-top: 50px;">
+                    <p>Mengetahui</p>
+                    <p>Ketua STT</p>
+                    <strong>TTD</strong> <!-- Menambahkan TTD di bawah tanda tangan -->
+                    <span class="signature">{{ $pengurus->ketua ?? '' }}</span><br>
+                </td>
+            </tr>
+        </table>
+
     </body>
 </head>
  <!-- jQuery -->

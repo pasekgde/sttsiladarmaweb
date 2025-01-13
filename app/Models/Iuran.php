@@ -9,6 +9,7 @@ class Iuran extends Model
 {
     use HasFactory;
     protected $primaryKey = 'idiuran';
+    
 
 
     protected $table = 'iuran';

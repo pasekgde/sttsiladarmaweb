@@ -14,6 +14,10 @@ class Anggota extends Model
         return $this->hasMany(Absensi::class, 'idanggota');
     }
     
+    public function penekelan()
+    {
+        return $this->hasMany(Penekelan::class, 'idanggota');
+    }
     
     protected $table = 'anggota';
     protected $primaryKey = 'idanggota';

@@ -20,7 +20,7 @@
                   <div class="x_content">
                   
 
-                        <form method="POST" action="/updatedatanggota/{{$data->idanggota}}" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <form method="POST" action="/updatedatanggota/{{$datas->idanggota}}" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         @method('PUT')
                         {{ csrf_field() }}
                         
@@ -28,30 +28,30 @@
                                 <label class="col-form-label col-md-3 col-sm-3 label-align">Nama Anggota <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <input type="text" required="required" class="form-control @error('nama', 'post') is-invalid @enderror text-uppercase" name="nama" value="{{$data->nama}}" autofocus/>
+                                    <input type="text" required="required" class="form-control @error('nama', 'post') is-invalid @enderror text-uppercase" name="nama" value="{{$datas->nama}}" autofocus/>
                                 </div>
                             </div>
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align">Tanggal Lahir <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <input type="text" id="tgl" data-provide="datepicker"  class="form-control datepicker @error('tgllahir', 'post') is-invalid @enderror" name="tgllahir" value="{{$data->tgllahir}}">
+                                    <input type="text" id="tgl" data-provide="datepicker"  class="form-control datepicker @error('tgllahir', 'post') is-invalid @enderror" name="tgllahir" value="{{$datas->tgllahir}}">
                                 </div>
                             </div>
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Umur <span class="required">*</span>
                                 </label>
                                 <div class="col-md-1 col-sm-1 ">
-                                    <input type="int" id="umur" class="form-control @error('umur', 'post') is-invalid @enderror" name="umur" value="{{$data->umur}}" readonly>
+                                    <input type="int" id="umur" class="form-control @error('umur', 'post') is-invalid @enderror" name="umur" value="{{$datas->umur}}" readonly>
                                 </div>
                             </div>
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="status">Pekerjaan <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <select class="form-control @error('pekerjaan', 'post') is-invalid @enderror" name="pekerjaan" value="{{$data->pekerjaan}}" required="required">
-                                        @if($data->pekerjaan)
-                                        <option value="{{$data->pekerjaan}}" selected>{{$data->pekerjaan}}</option>
+                                    <select class="form-control @error('pekerjaan', 'post') is-invalid @enderror" name="pekerjaan" value="{{$datas->pekerjaan}}" required="required">
+                                        @if($datas->pekerjaan)
+                                        <option value="{{$datas->pekerjaan}}" selected>{{$datas->pekerjaan}}</option>
                                         <option>SMP</option>
                                         <option>SMA/SMK</option>
                                         <option>Mahasiswa</option>
@@ -64,17 +64,17 @@
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="status">Tempek <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <input type="radio" name="tempek" id="Kangin" value="Kangin" {{ $data->tempek == 'Kangin' ? 'checked' : ''}}> Kangin <br>
-								    <input type="radio" name="tempek" id="Kauh" value="Kauh" {{ $data->tempek == 'Kauh' ? 'checked' : ''}}> Kauh
+                                    <input type="radio" name="tempek" id="Kangin" value="Kangin" {{ $datas->tempek == 'Kangin' ? 'checked' : ''}}> Kangin <br>
+								    <input type="radio" name="tempek" id="Kauh" value="Kauh" {{ $datas->tempek == 'Kauh' ? 'checked' : ''}}> Kauh
                                 </div>
                             </div>
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="status">Status <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <select class="form-control @error('status', 'post') is-invalid @enderror" name="status" value="{{$data->status}}" required="required">
-                                        @if($data->status)
-                                        <option value="{{$data->status}}" selected>{{$data->status}}</option>
+                                    <select class="form-control @error('status', 'post') is-invalid @enderror" name="status" value="{{$datas->status}}" required="required">
+                                        @if($datas->status)
+                                        <option value="{{$datas->status}}" selected>{{$datas->status}}</option>
                                         <option>Aktif</option>
                                         <option>Nekel</option>
                                         @endif

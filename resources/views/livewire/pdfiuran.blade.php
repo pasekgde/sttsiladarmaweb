@@ -132,27 +132,28 @@
         <div class="member-table">
             <h4>Daftar Anggota</h4>
             <table class="table table-bordered">
-    <thead>
-        <tr>
-            <th class="table-primary">No</th>
-            <th class="table-primary">Nama Anggota</th>
-            <th class="table-primary">Jumlah Bayar</th>
-            <th class="table-primary">Tanggal Bayar</th>
-            <th class="table-primary">Status Bayar</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($bayariuran as $key => $item)
-            <tr>
-                <td>{{ $key + 1 }}</td>
-                <td>{{ ucwords(strtolower($anggota[$key]->nama)) ?? 'N/A' }}</td>
-                <td>Rp {{ number_format($item->jumlahbayar, 0, ',', '.') }}</td>
-                <td>{{ \Carbon\Carbon::parse($item->tanggalbayar)->format('d-m-Y') }}</td>  <!-- Format date without time -->
-                <td>{{ $item->statusbayar }}</td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+                <thead>
+                    <tr>
+                        <th class="table-primary">No</th>
+                        <th class="table-primary">Nama Anggota</th>
+                        <th class="table-primary">Jumlah Bayar</th>
+                        <th class="table-primary">Tanggal Bayar</th>
+                        <th class="table-primary">Status Bayar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($bayariuran as $key => $item)
+    <tr>
+        <td>{{ $key + 1 }}</td>
+        <td>{{ ucwords(strtolower($anggota[$key]->nama)) ?? 'N/A' }}</td>
+        <td>Rp {{ number_format($item->jumlahbayar, 0, ',', '.') }}</td>
+        <td>{{ \Carbon\Carbon::parse($item->tanggalbayar)->format('d-m-Y') }}</td> <!-- Format date without time -->
+        <td>{{ $item->statusbayar }}</td>
+    </tr>
+@endforeach
+
+                </tbody>
+            </table>
 
         </div>
 
@@ -161,24 +162,27 @@
                 <!-- Kolom Bendahara -->
                 <td style="width: 33%; text-align: center;">
                     <p>Bendahara</p>
-                    <span class="signature">I Putu Yuda Permadi</span>
+                    <strong>TTD</strong> <!-- Menambahkan TTD di bawah tanda tangan -->
+                    <span class="signature">{{ $pengurus->bendahara ?? '' }}</span><br>
                 </td>
-            
+
                 <!-- Kolom kosong untuk memisahkan -->
                 <td style="width: 33%;"></td>
-            
+
                 <!-- Kolom Sekretaris -->
                 <td style="width: 33%; text-align: center;">
                     <p>Sekretaris</p>
-                    <span class="signature">Ni Kadek Ima Irmayani, S.Pd</span>
+                    <strong>TTD</strong> <!-- Menambahkan TTD di bawah tanda tangan -->
+                    <span class="signature">{{ $pengurus->sekretaris ?? '' }}</span><br>
                 </td>
             </tr>
             <tr>
                 <!-- Ketua di tengah bawah -->
                 <td colspan="3" style="padding-top: 50px;">
                     <p>Mengetahui</p>
-                    <p>Ketua STT Sila Dharma</p>
-                    <span class="signature">Gde Gung Prabawa, S.Pd</span>
+                    <p>Ketua STT</p>
+                    <strong>TTD</strong> <!-- Menambahkan TTD di bawah tanda tangan -->
+                    <span class="signature">{{ $pengurus->ketua ?? '' }}</span><br>
                 </td>
             </tr>
         </table>

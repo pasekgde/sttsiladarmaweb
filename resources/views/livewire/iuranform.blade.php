@@ -1,4 +1,50 @@
 <div>
+    <style>
+        .loading-container {
+            position: fixed;  /* Membuat posisi tetap di layar */
+            top: 0;
+            left: 0;
+            width: 100%;  /* Mengambil lebar seluruh layar */
+            height: 100%;  /* Mengambil tinggi seluruh layar */
+            display: flex;  /* Menggunakan flexbox */
+            justify-content: center;  /* Menempatkan spinner secara horizontal di tengah */
+            align-items: center;  /* Menempatkan spinner secara vertikal di tengah */
+            background-color: rgba(0, 0, 0, 0.5);  /* Memberikan latar belakang transparan */
+            z-index: 9999;  /* Memastikan spinner muncul di atas elemen lainnya */
+            flex-direction: column;  /* Menyusun spinner dan teks secara vertikal */
+        }
+
+        /* Styling untuk teks loading */
+        .loading-text {
+            color: white;  /* Warna teks putih */
+            font-size: 18px;  /* Ukuran teks */
+            margin-top: 10px;  /* Memberikan jarak antara spinner dan teks */
+            font-weight: bold;  /* Menebalkan teks */
+        }
+    </style>
+
+    <div wire:loading wire:target="printiuran">
+        <div class="loading-container">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="loading-text">
+                Sedang Mendownload Data...
+            </div>
+        </div>
+    </div>
+
+    <div wire:loading wire:target="showPaymentModal">
+        <div class="loading-container">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="loading-text">
+                Sedang Menampilkan Data...
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-12  ">
         <div class="x_panel">
             <div class="row mb-3 align-items-center">
@@ -150,8 +196,8 @@
             <div class="modal-body">
                 <!-- Tabel Anggota Pembayaran -->
                 <div style="max-height: 500px; overflow-y: auto; display: block;">
-                    <table class="table table-bordered table-striped">
-                        <thead class="thead-light">
+                    <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
+                        <thead class="thead-light" style="position: sticky; top: 0; background-color: #343a40; z-index: 1;">
                             <tr>
                                 <th style="text-align: center; vertical-align: middle; width: 5%;">Nama Anggota</th>
                                 <th style="text-align: center; vertical-align: middle; width: 4%;">Jumlah Iuran</th>

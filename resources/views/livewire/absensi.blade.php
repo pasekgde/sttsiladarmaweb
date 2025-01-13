@@ -1,4 +1,38 @@
 <div>
+    <style>
+        .loading-container {
+            position: fixed;  /* Membuat posisi tetap di layar */
+            top: 0;
+            left: 0;
+            width: 100%;  /* Mengambil lebar seluruh layar */
+            height: 100%;  /* Mengambil tinggi seluruh layar */
+            display: flex;  /* Menggunakan flexbox */
+            justify-content: center;  /* Menempatkan spinner secara horizontal di tengah */
+            align-items: center;  /* Menempatkan spinner secara vertikal di tengah */
+            background-color: rgba(0, 0, 0, 0.5);  /* Memberikan latar belakang transparan */
+            z-index: 9999;  /* Memastikan spinner muncul di atas elemen lainnya */
+            flex-direction: column;  /* Menyusun spinner dan teks secara vertikal */
+        }
+
+        /* Styling untuk teks loading */
+        .loading-text {
+            color: white;  /* Warna teks putih */
+            font-size: 18px;  /* Ukuran teks */
+            margin-top: 10px;  /* Memberikan jarak antara spinner dan teks */
+            font-weight: bold;  /* Menebalkan teks */
+        }
+    </style>
+    
+    <div wire:loading wire:target="submitForm">
+        <div class="loading-container">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="loading-text">
+                Sedang Membuat Absensi...
+            </div>
+        </div>
+    </div>
 
           <div class="x_content">
             <div class="col-md-12 col-sm-12 ">
@@ -206,7 +240,6 @@
                                                     <div class="tombolditengah">
                                                         <button type="button" class="btn btn-danger" wire:click="back(2)">Kembali</button>
                                                         <button type="button" class="btn btn-success" wire:click="submitForm()">Simpan Presensi</button>
-                                                        <button type="button" cla=" btn btn-warning" wire:click="printAbsensi()">Print Data</button>
                                                     </div>
                                                 </div>
                                             </div>

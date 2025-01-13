@@ -39,7 +39,7 @@
                                         <td style="width:2%">{{$no++}}</td>
                                         <td>{{$dataanggotas->nama}}</td>
                                         <td>{{$dataanggotas->tgllahir}}</td>
-                                        <td>{{$dataanggotas->umur}}</td>
+                                        <td>{{$dataanggotas->umur_sekarang}}</td>
                                         <td>{{$dataanggotas->pekerjaan}}</td>
                                         <td>{{$dataanggotas->tempek}}</td>
                                         <td>{{$dataanggotas->status}}</td>

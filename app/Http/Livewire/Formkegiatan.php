@@ -60,17 +60,19 @@ class Formkegiatan extends Component
     {
         if (Auth::user()->status == "Panitia") {
             $datakegiatan = Event::where('kodekegiatan',$this->kodekegiatan)
-                                ->orderby( 'tglkas', 'desc' )
+                                ->orderby( 'updated_at', 'desc' )
                                 ->where('keterangan', 'like', '%'.$this->search.'%')
                                 ->paginate( $this->perpage );
         } else {
             $datakegiatan = Event::where('kodekegiatan',$this->kodekegiatan)
-                                ->orderby( 'tglkas', 'desc' )
+                                ->orderby( 'updated_at', 'desc' )
                                 ->where('keterangan', 'like', '%'.$this->search.'%')
                                 ->paginate( $this->perpage );
         }
 
-        return view('livewire.formkegiatan',compact('datakegiatan'));
+        $kegdata = Kegiatan::where('kodekegiatan', $this->kodekegiatan)->first();
+
+        return view('livewire.formkegiatan',['datakegiatan' => $datakegiatan, 'kegdata' => $kegdata ]);
     }
 
     public function store() {

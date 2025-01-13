@@ -91,6 +91,19 @@ Route::get('/form-denda', [App\Http\Controllers\DendaCOntroller::class, 'index']
 //laporan iuran
 Route::get('/iuran-wajib', [App\Http\Controllers\IuranController::class, 'index'])->name('iuranwajib');
 
+//laporan iuran
+Route::get('/penekelan', [App\Http\Controllers\PenekelanController::class, 'index'])->name('penekelan');
+
+//TRUNCATE DATA
+Route::get('/superadmin-truncatedata', [App\Http\Controllers\TruncateController::class, 'index'])->name('truncate');
+
+//INFOSISTEM
+Route::get('/superadmin-sisteminfo', [App\Http\Controllers\SisteminfoController::class, 'index'])->name('sisteminfo');
+
+//pengurusinfo
+Route::get('/superadmin-pengurusinfo', [App\Http\Controllers\PengurusController::class, 'index'])->name('pengurusinfo');
+
+
 
 });
 

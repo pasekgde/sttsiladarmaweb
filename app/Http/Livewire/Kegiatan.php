@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Kegiatan as KEG;
+use App\Models\Event;
 use App\Helpers\AutoKegiatan;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -20,6 +21,9 @@ class Kegiatan extends Component
     public $tglpembuatan;
     public $namakegiatan;
     public $deskripsi;
+    public $ketuapanitia;
+    public $sekretarispanitia;
+    public $bendaharapanitia;
     public $formedit = false;
 
     public $userid = [];
@@ -60,7 +64,7 @@ class Kegiatan extends Component
                 $userIds = json_decode($kegiatan->pengguna); // Decode JSON menjadi array ID pengguna
                 if (is_array($userIds) && !empty($userIds)) {
                     // Ambil nama berdasarkan ID jika array pengguna ada isinya
-                    $userNames = User::whereIn('id', $userIds)->pluck('name'); 
+                    $userNames = User::whereIn('id', $userIds)->get(['name', 'status']);
                 } else {
                     $userNames = collect(); // Jika tidak ada ID yang valid, kosongkan hasil
                 }
@@ -70,6 +74,7 @@ class Kegiatan extends Component
             
             // Menambahkan nama pengguna ke masing-masing kegiatan
             $kegiatan->user_names = $userNames;
+
         }
                     
         return view('livewire.kegiatan', compact('datakegiatan'));
@@ -82,6 +87,9 @@ class Kegiatan extends Component
             'tglpembuatan' => 'required',
             'namakegiatan' => 'required',
             'deskripsi' => 'required',
+            'ketuapanitia' => 'required',
+            'sekretarispanitia' => 'required',
+            'bendaharapanitia' => 'required',
             'selectedOptions' => 'array|min:1'
         ] );
 
@@ -90,6 +98,9 @@ class Kegiatan extends Component
             'tglpembuatan' => date( 'Y-m-d', strtotime( $this->tglpembuatan ) ),
             'namakegiatan' => Str::ucfirst( $this->namakegiatan ),
             'deskripsi' => Str::ucfirst( $this->deskripsi ),
+            'ketuapanitia' => Str::ucfirst( $this->ketuapanitia ),
+            'sekretarispanitia' => Str::ucfirst( $this->sekretarispanitia ),
+            'bendaharapanitia' => Str::ucfirst( $this->bendaharapanitia ),
             'pengguna' => json_encode($this->selectedOptions),
             'user' => $this->operator(),
             'status' => 'Belum'
@@ -118,6 +129,9 @@ class Kegiatan extends Component
             'tglpembuatan' => 'required',
             'namakegiatan' => 'required',
             'deskripsi' => 'required',
+            'ketuapanitia' => 'required',
+            'sekretarispanitia' => 'required',
+            'bendaharapanitia' => 'required',
             'selectedOptions' => 'array|min:1'
         ] );
 
@@ -127,6 +141,9 @@ class Kegiatan extends Component
             'tglpembuatan' => date( 'Y-m-d', strtotime( $this->tglpembuatan ) ),
             'namakegiatan' => Str::ucfirst( $this->namakegiatan ),
             'deskripsi' => Str::ucfirst( $this->deskripsi ),
+            'ketuapanitia' => Str::ucfirst( $this->ketuapanitia ),
+            'sekretarispanitia' => Str::ucfirst( $this->sekretarispanitia ),
+            'bendaharapanitia' => Str::ucfirst( $this->bendaharapanitia ),
             'pengguna' => json_encode($this->selectedOptions),
             'user' => $this->operator(),
             'status' => 'Belum'
@@ -145,7 +162,10 @@ class Kegiatan extends Component
     }
 
     public function deletedata() {
+        $kodekeg = KEG::find( $this->idkeg )->kodekegiatan;
+        Event::where('kodekegiatan', '=', $kodekeg)->delete();
         KEG::find( $this->idkeg )->delete();
+
         $this->kodekegiatan = $this->kodekegiatan();
     }
 
@@ -168,6 +188,9 @@ class Kegiatan extends Component
         $this->tglpembuatan = Carbon::now()->format('d/m/Y');
         $this->namakegiatan = "";
         $this->deskripsi = "";
+        $this->ketuapanitia = "";
+        $this->sekretarispanitia = "";
+        $this->bendaharapanitia = "";
         $this->selectedOptions =[];
     }
 

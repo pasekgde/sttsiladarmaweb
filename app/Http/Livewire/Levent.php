@@ -186,8 +186,7 @@ class Levent extends Component
                             ->whereBetween('tglkas', [$this->tglawal, $this->tglakhir])
                             ->where('jeniskas', 'like', '%'. $this->tipekas .'%')
                             ->where('keterangan', 'like', '%'. $this->search .'%')
-                            ->orderby( 'tglkas', 'desc' )
-                            ->paginate($this->perpage);
+                            ->orderby( 'updated_at', 'desc' )->get();
             $this->sumkasmasuk();
             $this->sumkaskeluar();
             $this->saldo();
@@ -196,8 +195,7 @@ class Levent extends Component
                 $data = Ev::where('kodekegiatan',$kegiatan->kodekegiatan)
                                 ->where('jeniskas', 'like', '%'. $this->tipekas .'%')
                                 ->where('keterangan', 'like', '%'. $this->search .'%')
-                                ->orderby( 'tglkas', 'desc' )
-                                ->paginate($this->perpage);
+                                ->orderby( 'updated_at', 'desc' )->get();
 
                 $summasuk = Ev::where( 'jeniskas', 'Masuk' )
                                 ->where('kodekegiatan',$kegiatan->kodekegiatan)
@@ -212,8 +210,7 @@ class Levent extends Component
                 $data = Ev::where('kodekegiatan',$kegiatan->kodekegiatan)
                                 ->where('jeniskas', 'like', '%'. $this->tipekas .'%')
                                 ->where('keterangan', 'like', '%'. $this->search .'%')
-                                ->orderby( 'tglkas', 'desc' )
-                                ->paginate($this->perpage);
+                                ->orderby( 'updated_at', 'desc' )->get();
 
                 $summasuk = 0;
                         $this->sumkasmasuk = currency_IDR( $summasuk );
@@ -228,8 +225,7 @@ class Levent extends Component
             {
                 $data = Ev::latest()->where('keterangan', 'like', '%'. $this->search .'%')
                                         ->where('kodekegiatan',$kegiatan->kodekegiatan)
-                                        ->orderby( 'tglkas', 'desc' )
-                                        ->paginate($this->perpage);
+                                        ->orderby( 'updated_at', 'desc' )->get();
 
                 $summasuk = Ev::where('kodekegiatan',$kegiatan->kodekegiatan)
                             ->where( 'jeniskas', 'Masuk' )
@@ -251,8 +247,7 @@ class Levent extends Component
                                 ->whereBetween('tglkas', [$this->tglawal, $this->tglakhir])
                                 ->where('jeniskas', 'like', '%'. $this->tipekas .'%')
                                 ->where('keterangan', 'like', '%'. $this->search .'%')
-                                ->orderby( 'tglkas', 'desc' )
-                                ->paginate($this->perpage);
+                                ->orderby( 'updated_at', 'desc' )->get();
                 $this->sumkasmasuk();
                 $this->sumkaskeluar();
                 $this->saldo();
@@ -261,8 +256,7 @@ class Levent extends Component
                 $data = Ev::where('kodekegiatan',$kegiatan->kodekegiatan)
                                 ->where('jeniskas', 'like', '%'. $this->tipekas .'%')
                                 ->where('keterangan', 'like', '%'. $this->search .'%')
-                                ->orderby( 'tglkas', 'desc' )
-                                ->paginate($this->perpage);
+                                ->orderby( 'updated_at', 'desc' )->get();
 
                 $summasuk = Ev::where( 'jeniskas', 'Masuk' )
                                 ->where('kodekegiatan',$kegiatan->kodekegiatan)
@@ -277,8 +271,7 @@ class Levent extends Component
                 $data = Ev::where('kodekegiatan',$kegiatan->kodekegiatan)
                                 ->where('jeniskas', 'like', '%'. $this->tipekas .'%')
                                 ->where('keterangan', 'like', '%'. $this->search .'%')
-                                ->orderby( 'tglkas', 'desc' )
-                                ->paginate($this->perpage);
+                                ->orderby( 'updated_at', 'desc' )->get();
 
                 $summasuk = 0;
                         $this->sumkasmasuk = currency_IDR( $summasuk );
@@ -293,8 +286,7 @@ class Levent extends Component
             {
                 $data = Ev::latest()->where('keterangan', 'like', '%'. $this->search .'%')
                                         ->where('kodekegiatan',$kegiatan->kodekegiatan)
-                                        ->orderby( 'tglkas', 'desc' )
-                                        ->paginate($this->perpage);
+                                        ->orderby( 'updated_at', 'desc' )->get();
 
                 $summasuk = Ev::where('kodekegiatan',$kegiatan->kodekegiatan)
                                 ->where( 'jeniskas', 'Masuk' )
@@ -315,11 +307,11 @@ class Levent extends Component
 
         
         
-        $pdf = PDF::loadView('livewire.pdfkegiatan', ['data'=>$data,'summasuk'=>$this->sumkasmasuk,'sumkeluar'=>$this->sumkaskeluar,'saldo'=>$this->saldo, 'tipekas'=>$this->tipekas, 'namaevent'=>$this->namaevent])->output();
- 
+        $pdf = PDF::loadView('livewire.pdfkegiatan', ['pengurus' => $kegiatan,'data'=>$data,'summasuk'=>$this->sumkasmasuk,'sumkeluar'=>$this->sumkaskeluar,'saldo'=>$this->saldo, 'tipekas'=>$this->tipekas, 'namaevent'=>$this->namaevent])->output();
+        $filename = 'Panitia Kegiatan  - ' . str_replace(' ', '_', $kegiatan->namakegiatan) . '.pdf';
         return response()->streamDownload(
             fn () => print($pdf),
-            "Laporan Kegiatan STT.pdf"
+            $filename
         );
     }
 }

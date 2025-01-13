@@ -12,6 +12,7 @@ use App\Helpers\AutoNumber;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
+use App\Models\Pengurus;
 
 class Iuranform extends Component
 {
@@ -29,6 +30,7 @@ class Iuranform extends Component
     public $modal_title;
     public $data;
     public $tombolbatal;
+    public $isLoading = false;
 
      // Pagination and search properties
      public $search = '';
@@ -270,7 +272,9 @@ class Iuranform extends Component
 
     public function printiuran($iuran_id)
     {
+        $this->isLoading = true;
         // Get the iuran record
+        $namattd =$this->pengurus = Pengurus::first();
         $iuran = Iuran::find($iuran_id);
 
         // Get all bayariuran records for the specified iuran_id
@@ -290,11 +294,12 @@ class Iuranform extends Component
         $pdf = PDF::loadView('livewire.pdfiuran', [
             'iuran' => $iuran,
             'bayariuran' => $bayariuran,
-            'anggota' => $anggota
+            'anggota' => $anggota,
+            'pengurus' => $namattd
         ])->output();
 
         $filename = 'Data Iuran STT - ' . str_replace(' ', '_', $iuran->perihal) . '.pdf';
-        
+        $this->isLoading = false;
         // Return the PDF as a downloadable file
         return response()->streamDownload(
             fn() => print($pdf),

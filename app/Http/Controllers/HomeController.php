@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 Use Alert;
+use App\Models\Sisteminfo as SI;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.dasboard');
+        $data = SI::first();
+        return view('pages.dasboard',compact('data'));
     }
 }

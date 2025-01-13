@@ -17,7 +17,11 @@
     <style>
         /* Styling for the Body to center the logo */
 body {
-    background-image: url('https://i.ibb.co.com/Fbvdwh9/temple-gates-lempuyang-luhur-temple-bali-indonesia.jpg'); /* Ganti dengan URL gambar latar belakang Anda */
+    @if($data && $data->background)
+        background-image: url('{{ asset('storage/' . $data->background) }}');
+    @else
+        background-image: url('https://i.ibb.co.com/Fbvdwh9/temple-gates-lempuyang-luhur-temple-bali-indonesia.jpg');
+    @endif
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;

@@ -30,6 +30,8 @@ class Absensi extends Component
     public $totalTidakHadir = 0;
     public $totalDenda = 0;
 
+    public $isLoading = false;
+
 
     //wizard
     public $currentStep = 1;
@@ -88,6 +90,8 @@ class Absensi extends Component
 
     public function submitForm()
     {
+        $this->isLoading = true;
+
         $tabelkegiatan = TabelKegiatan::create( [
             'tanggal_kegiatan' => $this->tanggal_kegiatan ,
             'nama_kegiatan' => $this->nama_kegiatan,
@@ -118,6 +122,7 @@ class Absensi extends Component
                 'status' => $status, // Menyimpan status berdasarkan presensi
             ]);
         }
+        $this->isLoading = false;
         $this->emit( 'successabsensi', [ 'pesan'=>'Absensi Sudah Tersimpan' ] );
         $this->clearForm();
         $this->denda  = str_replace(['Rp', '.', ' '], '', $this->denda);

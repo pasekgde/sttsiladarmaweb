@@ -42,7 +42,7 @@
                                         <th style="text-align: center; vertical-align: middle; width: 5%;">Tgl Pembuatan</th>
                                         <th style="text-align: center; vertical-align: middle; width: 13%;">Nama Kegiatan</th>
                                         <th style="text-align: center; vertical-align: middle; width: 13%;">Deskripsi</th>
-                                        <th style="text-align: center; vertical-align: middle; width: 5%;">User</th>
+                                        <th style="text-align: center; vertical-align: middle; width: 5%;">Ketua Panitia</th>
                                         <th style="text-align: center; vertical-align: middle; width: 10%;">Hak Akses</th>
                                         <th style="text-align: center; vertical-align: middle; width: 16%;">Aksi</th>
                                     </tr>
@@ -55,19 +55,19 @@
                                             <td style="text-align: center; vertical-align: middle;">{{ $kegiatan->tglpembuatan }}</td>
                                             <td style="text-align: left; vertical-align: middle;">{{ $kegiatan->namakegiatan }}</td>
                                             <td style="text-align: left; vertical-align: middle;">{{ $kegiatan->deskripsi }}</td>
-                                            <td style="text-align: center; vertical-align: middle;">{{ $kegiatan->user }}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{{ $kegiatan->ketuapanitia }}</td>
                                             <td style="text-align: center; vertical-align: middle;">
-                                                @if($kegiatan->pengguna) 
-                                                    @if(count($kegiatan->user_names) > 1)
-                                                        @foreach($kegiatan->user_names as $index => $userName)
-                                                            {{ $userName }}{{ $loop->last ? '' : ',' }}
-                                                        @endforeach
-                                                    @else
-                                                        {{ $kegiatan->user_names[0] ?? '-' }}
-                                                    @endif
+                                            @if($kegiatan->pengguna) 
+                                                @if(count($kegiatan->user_names) > 1)
+                                                    @foreach($kegiatan->user_names as $user)
+                                                        {{ $user->name }} ({{ $user->status }}){{ $loop->last ? '' : ',' }}
+                                                    @endforeach
                                                 @else
-                                                    - <!-- Jika pengguna kosong -->
+                                                    {{ $kegiatan->user_names[0]->name ?? '-' }} ({{ $kegiatan->user_names[0]->status ?? '-' }})
                                                 @endif
+                                            @else
+                                                - <!-- Jika pengguna kosong -->
+                                            @endif
                                             </td>
                                             <td style="text-align: center; vertical-align: middle;">
                                                 @if($kegiatan->status == 'Belum')
@@ -114,7 +114,6 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="createKegiatanModalLabel">Buat Baru Data Kas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     @include('livewire.createkegiatan')

@@ -8,6 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class bayariuran extends Model
 {
     use HasFactory;
+
+    public function iuran()
+    {
+        return $this->belongsTo(Iuran::class, 'idiuran');
+    }
+
+    public function anggota()
+    {
+        return $this->belongsTo(Anggota::class, 'idanggota');
+    }
+
     protected $primaryKey = 'idbayariuran';
 
     protected $table = 'bayariuran';

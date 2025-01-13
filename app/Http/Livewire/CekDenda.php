@@ -6,6 +6,9 @@ use Livewire\Component;
 use Livewire\Validation;
 use App\Models\Anggota;
 use App\Models\Absensi;
+use App\Models\Penikelan;
+use App\Models\bayariuran;
+use App\Models\Iuran;
 
 class CekDenda extends Component
 {
@@ -18,6 +21,11 @@ class CekDenda extends Component
     public $statusLunas = false; // Menambahkan properti untuk status lunas
     public $tidakAdaDenda = false;
     public $anggota;
+    public $totalDendaanggota;
+    public $nikelanggota;
+    public $totaldendaawal;
+
+    public $dataiuran;
 
     public function cekDenda()
     {
@@ -47,18 +55,37 @@ class CekDenda extends Component
                 ->where('status', 'Belum Bayar')
                 ->get();
             $this->totalDenda = $this->absensi->sum('denda');
+            $jumlahBelumBayar =$this->absensi->count();
 
             if ($this->absensi->isEmpty()) {
                 $this->tidakAdaDenda = true; // Menandakan tidak ada denda
             } else {
                 // Menghitung total denda
-                $this->totalDenda = $this->absensi->sum('denda'); // Menjumlahkan semua denda
+                $totalDenda = $this->absensi->sum('denda'); // Menjumlahkan semua denda
+                $this->totaldendaawal = $this->totalDenda;
+
+                $datapenikelan = Penikelan::first();
+                if (isset($datapenikelan->penikelan_denda) && $jumlahBelumBayar != 1 && $this->penikelandata > 1) {
+                    // Jika jumlah absensi yang belum bayar adalah kelipatan dari $this->penikelandata
+                    if ($jumlahBelumBayar >= $datapenikelan->penikelan_denda) {
+                        // Hitung berapa kali kelipatan dari $penikelandata
+                        $nikel = floor($jumlahBelumBayar / $datapenikelan->penikelan_denda);
+                        // Kalikan total denda dengan kelipatan 2 per kelipatan
+                        $this->totalDendaanggota = $totalDenda * (pow(2, $nikel));
+                    }
+                }else {
+                    $nikel = 0;  // Reset nikel jika kondisi tidak dipenuhi
+                    $this->totalDendaanggota = $totalDenda;
+                }
+
+                $this->nikelanggota = $nikel;
 
                 // Periksa apakah anggota sudah lunas
                 $this->statusLunas = $this->absensi->every(function($absen) {
                     return $absen->is_lunas;  // Cek apakah semua absensi sudah lunas
                 });
             }
+
         } else {
             // Jika anggota tidak ditemukan
             $this->absensi = collect(); // Kosongkan hasil jika anggota tidak ditemukan

@@ -93,7 +93,7 @@
                                 <td>{{currency_IDR($ev->jumlah)}}</td>
                                 <td>{{$ev->user}}</td>
                                 <td class="text-center">
-                                @if ($ev->status == 'Belum')
+                                @if ($kegdata->status === 'Belum')
                                     <a href="#" wire:click="edit({{$ev->id}})" class="text-primary"><i class="fa fa-pencil"></i> Edit</a>&nbsp;&nbsp;
                                     <a href="#" wire:click.prevent="destroypesan({{$ev->id}})" class="text-danger"><i class="fa fa-trash-o"></i> Delete</a>
                                 @else
