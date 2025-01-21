@@ -87,11 +87,6 @@
                       <h10 alt="Profile">{{ Auth::user()->name }}</h10>
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="javascript:;">Profile</a>
-                    <a class="dropdown-item" href="javascript:;">
-                      <span class="badge bg-red pull-right">50%</span>
-                      <span>Settings</span>
-                    </a>
                     <a class="dropdown-item" href="{{ route('logout') }}" 
                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                       <i class="fa fa-sign-out pull-right"></i> {{ __('Logout') }}

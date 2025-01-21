@@ -148,7 +148,7 @@
 
         <table width="100%">
             <tr>
-                <td> <img src="https://i.ibb.co/CPDmCM8/logost.jpg" width="140px"> </td>
+                <td> <img src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/' . $logoPath))) }}" width="140px"> </td>
                 <td><td>
                 <td class="tengah">
                     <div class="caption" style="font-family:Arial; font-size:40px; font-weight:bold;"><span>STT SILA DHARMA</span></div>
@@ -189,13 +189,13 @@
                 </td>
             </tr>
 
-            <!-- <tr>
+            <tr>
                 <td>Saldo</td>
                 <td>:</td>
                 <td>
                 {{ $saldo }}
                 </td>
-            </tr> -->
+            </tr>
         </table>
         <br>
         <table class="tg" width="100%">

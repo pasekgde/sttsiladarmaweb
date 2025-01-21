@@ -5,7 +5,6 @@
                 <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="/">Dashboard</a></li>
-                      <li><a href="#">Profil</a></li>
                     </ul>
                   </li>
                   
@@ -16,6 +15,7 @@
                           <ul class="nav child_menu">
                           @if (Auth::user()->status == "Superadmin" || Auth::user()->status == "Ketua")
                               <li><a href="/datauser"> Data Users</a></li>
+                              <li><a href="/confirm-pendataan"> Confirm Anggota</a></li>
                           @endif
                               <li><a href="/dataanggota"> Anggota STT</a></li>
                               
@@ -44,6 +44,8 @@
                               <li><a href="/penekelan">Penekelan</a></li>
                           </ul>
                       </li>
+                      
+
                   @endif
 
                   <br>
@@ -57,7 +59,12 @@
                           <li><a href="/pilihlaporan">Laporan Kegiatan</a></li>
                       </ul>
                   </li>
+
+                  <li><a href="/outstt" style="background-color: red; color: white;"><i class="fa fa-times"></i> Keluar Anggota</a></li>
+                      <li><a href="/alumni" style="background-color: red; color: white;"><i class="fa fa-user"></i> Data Alumni</a></li>
                 </ul>
+
+                
 
                 @if (Auth::user()->status == "Superadmin")
                 <ul class="nav side-menu">
@@ -66,7 +73,7 @@
                           <ul class="nav child_menu">
                               <li><a href="/superadmin-sisteminfo"> Informasi dan Gambar</a></li>
                               <li><a href="/superadmin-pengurusinfo"> Pengurus Inti</a></li>
-                              <li><a href="/superadmin-truncatedata"> Truncate Data !</a></li>
+                              <li style="background-color: red; color: white;"><a href="/superadmin-truncatedata"> Truncate Data !</a></li>
                           </ul>
                       </li>
                 </ul>

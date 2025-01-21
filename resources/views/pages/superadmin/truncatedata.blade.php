@@ -145,6 +145,52 @@
                     });
                 }
             })
+        });
+
+        Livewire.on('truncateoutstt', data => {
+            Swal.fire({
+                title: data.pesan,
+                text: data.text,
+                icon: data.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    livewire.emit('truncateoutsttconfirm');
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Tersimpan',
+                    text: 'Aman be ilang',
+                    showConfirmButton: false,
+                    timer: 1500
+                    });
+                }
+            })
+        }); 
+
+        Livewire.on('truncatealumni', data => {
+            Swal.fire({
+                title: data.pesan,
+                text: data.text,
+                icon: data.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    livewire.emit('truncatealumniconfirm');
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Tersimpan',
+                    text: 'Aman be ilang',
+                    showConfirmButton: false,
+                    timer: 1500
+                    });
+                }
+            })
         }); 
 
 

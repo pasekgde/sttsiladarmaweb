@@ -7,6 +7,8 @@ use App\Models\Kas;
 use Livewire\WithPagination;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Pengurus;
+use App\Models\Sisteminfo as SI;
+use Illuminate\Support\Facades\Storage;
 
 class Lkas extends Component
 {
@@ -102,6 +104,9 @@ class Lkas extends Component
 
     public function printkas()
     {
+        $logoPath = SI::first()->logo;  // Assuming SI model has a logo field
+        $fullPath = storage_path('app/public/' . $logoPath);
+
         $namattd =$this->pengurus = Pengurus::first();
         if ($this->tglawal || $this->tglakhir && $this->tipekas) {
             $data = Kas::whereBetween('tglkas', [$this->tglawal, $this->tglakhir])
@@ -141,7 +146,7 @@ class Lkas extends Component
             $this->saldo();
         }
         
-        $pdf = PDF::loadView('livewire.pdfkas', ['pengurus'=>$namattd,'data'=>$data,'summasuk'=>$this->sumkasmasuk,'sumkeluar'=>$this->sumkaskeluar,'saldo'=>$this->saldo, 'tipekas'=>$this->tipekas])->output();
+        $pdf = PDF::loadView('livewire.pdfkas', ['pengurus'=>$namattd,'data'=>$data,'summasuk'=>$this->sumkasmasuk,'sumkeluar'=>$this->sumkaskeluar,'saldo'=>$this->saldo, 'tipekas'=>$this->tipekas,'logoPath'=>$logoPath])->output();
  
         return response()->streamDownload(
             fn () => print($pdf),

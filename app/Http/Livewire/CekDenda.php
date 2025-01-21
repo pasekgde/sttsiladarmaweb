@@ -20,10 +20,16 @@ class CekDenda extends Component
     public $bangsat = true;
     public $statusLunas = false; // Menambahkan properti untuk status lunas
     public $tidakAdaDenda = false;
+    public $tidakAdaIuran = false;
     public $anggota;
     public $totalDendaanggota;
     public $nikelanggota;
     public $totaldendaawal;
+    public $totalIuran;
+    public $iuran;
+    public $iuranLunas = false; // Menambahkan properti untuk status lunas
+    public $tampilhasil = false;
+    public $tampilcek = true;
 
     public $dataiuran;
 
@@ -65,7 +71,7 @@ class CekDenda extends Component
                 $this->totaldendaawal = $this->totalDenda;
 
                 $datapenikelan = Penikelan::first();
-                if (isset($datapenikelan->penikelan_denda) && $jumlahBelumBayar != 1 && $this->penikelandata > 1) {
+                if (isset($datapenikelan->penikelan_denda) && $jumlahBelumBayar != 1 && $datapenikelan->penikelan_denda > 1) {
                     // Jika jumlah absensi yang belum bayar adalah kelipatan dari $this->penikelandata
                     if ($jumlahBelumBayar >= $datapenikelan->penikelan_denda) {
                         // Hitung berapa kali kelipatan dari $penikelandata
@@ -81,16 +87,36 @@ class CekDenda extends Component
                 $this->nikelanggota = $nikel;
 
                 // Periksa apakah anggota sudah lunas
-                $this->statusLunas = $this->absensi->every(function($absen) {
-                    return $absen->is_lunas;  // Cek apakah semua absensi sudah lunas
+                $this->statusLunas = $this->absensi->every(function($iur) {
+                    return $iur->is_lunas;  // Cek apakah semua absensi sudah lunas
                 });
             }
 
+            //filter iuran
+            $this->iuran = bayariuran::with('iuran')
+                ->join('iuran', 'bayariuran.idiuran', '=', 'iuran.idiuran')
+                ->where('idanggota', $this->anggota->idanggota)
+                ->where('statusbayar', 'Belum Bayar')
+                ->get();
+            $this->totalIuran = $this->iuran->sum('jumlah');
+            $jumlahBelumBayarIuran =$this->iuran->count();
+
+            if ($this->iuran->isEmpty()) {
+                $this->tidakAdaIuran = true; // Menandakan tidak ada iuran
+            } else {
+                // Menghitung total denda
+                $this->totalIuran = $this->iuran->sum('jumlah'); // Menjumlahkan semua denda
+            }
         } else {
             // Jika anggota tidak ditemukan
-            $this->absensi = collect(); // Kosongkan hasil jika anggota tidak ditemukan
+            $this->iuran = collect(); // Kosongkan hasil jika anggota tidak ditemukan
         }
-        
+         // Periksa apakah anggota sudah lunas
+         $this->iuranLunas = $this->iuran->every(function($absen) {
+            return $absen->is_Terbayar;  // Cek apakah semua absensi sudah lunas
+        });
+        $this->tampilhasil =true;
+        $this->tampilcek = false;
         $this->anjing =true;
         $this->bangsat =false;
         // Set loading menjadi false setelah pencarian selesai
@@ -106,6 +132,8 @@ class CekDenda extends Component
         $this->totalDenda = 0;
         $this->statusLunas = false;  // Reset status lunas
         $this->tidakAdaDenda = false; 
+        $this->tampilcek = true;
+        $this->tampilhasil = false;
     }
 
     public function render()

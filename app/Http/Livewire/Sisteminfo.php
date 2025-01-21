@@ -43,8 +43,8 @@ class Sisteminfo extends Component
             'newDescription1' => 'required|string',
             'newDescription2' => 'nullable|string',
             'newOrganisasi'    => 'nullable|string',
-            'newLogo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi file logo
-            'newBackground' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048', // Validasi file logo
+            'newLogo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Validasi file logo
+            'newBackground' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5048', // Validasi file logo
         ]);
 
         // Jika ada logo yang diupload, simpan file dan ambil nama file-nya

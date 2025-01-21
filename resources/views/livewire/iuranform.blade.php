@@ -136,17 +136,17 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-between mt-3">
-        <!-- Total Data Row -->
-        <div class="d-flex align-items-center">
-            <strong>Total Data:</strong>
-            <span class="ml-2">{{ $iurans->total() }} Data</span>
-        </div>
+                    <!-- Total Data Row -->
+                    <div class="d-flex align-items-center">
+                        <strong>Total Data:</strong>
+                        <span class="ml-2">{{ $iurans->total() }} Data</span>
+                    </div>
 
-        <!-- Pagination Links -->
-        <div>
-            {{ $iurans->links('pagination::bootstrap-4') }}
-        </div>
-    </div>
+                    <!-- Pagination Links -->
+                    <div>
+                        {{ $iurans->links('pagination::bootstrap-4') }}
+                    </div>
+                </div>
             </div>
 
         </div>

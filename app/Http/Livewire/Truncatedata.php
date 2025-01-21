@@ -12,6 +12,8 @@ use App\Models\Kas;
 use App\Models\Kegiatan;
 use App\Models\TabelKegiatan;
 use App\Models\Penekelan;
+use App\Models\OutStt;
+use App\Models\Alumni;
 
 class Truncatedata extends Component
 {
@@ -20,7 +22,10 @@ class Truncatedata extends Component
                              'truncatekasconfirm' => 'truncatekasdata',
                              'truncatekegiatanconfirm' => 'truncatekegiatandata',
                              'truncatebayariuranconfirm' => 'truncatebayariurandata',
-                             'truncatebayarpenekelanconfirm' => 'truncatebayarpenekelandata' ];
+                             'truncatebayarpenekelanconfirm' => 'truncatebayarpenekelandata',
+                             'truncateoutsttconfirm' => 'truncateoutsttdata',
+                             'truncatealumniconfirm' => 'truncatealumnidata' ];
+                             
 
     public function render()
     {
@@ -123,6 +128,34 @@ class Truncatedata extends Component
     public function truncatebayarpenekelandata()
     {
         Penekelan::truncate();
+    }
+
+    public function truncateoutstt()
+    {
+        $this->emit('truncateoutstt', [
+            'pesan' => 'Ingin Memformat Data Pengajuan?',
+            'text' => 'Apakah Anda yakin ingin menghapus data Pengajuan?',
+            'icon' => 'warning'
+        ]);
+    }
+
+    public function truncateoutsttdata()
+    {
+        OutStt::truncate();
+    }
+
+    public function truncatealumni()
+    {
+        $this->emit('truncatealumni', [
+            'pesan' => 'Ingin Memformat Data Alumni?',
+            'text' => 'Apakah Anda yakin ingin menghapus data Alumni?',
+            'icon' => 'warning'
+        ]);
+    }
+
+    public function truncatealumnidata()
+    {
+        Alumni::truncate();
     }
 
 }

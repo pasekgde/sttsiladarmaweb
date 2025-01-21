@@ -8,6 +8,9 @@ use App\Models\Kegiatan as Keg;
 use Livewire\WithPagination;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
+use App\Models\Sisteminfo as SI;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Pengurus;
 
 class Levent extends Component
 {
@@ -178,7 +181,10 @@ class Levent extends Component
 
     public function printkas()
     {
+        $ketuastt = Pengurus::first();
         $kegiatan = Keg::where('id', $this->postId)->first();
+        $logoPath = SI::first()->logo;  // Assuming SI model has a logo field
+        $fullPath = storage_path('app/public/' . $logoPath);
         
         if (Auth::user()->status == "Panitia") {
             if ($this->tglawal || $this->tglakhir && $this->tipekas) {
@@ -307,7 +313,7 @@ class Levent extends Component
 
         
         
-        $pdf = PDF::loadView('livewire.pdfkegiatan', ['pengurus' => $kegiatan,'data'=>$data,'summasuk'=>$this->sumkasmasuk,'sumkeluar'=>$this->sumkaskeluar,'saldo'=>$this->saldo, 'tipekas'=>$this->tipekas, 'namaevent'=>$this->namaevent])->output();
+        $pdf = PDF::loadView('livewire.pdfkegiatan', ['ketuastt' => $ketuastt, 'pengurus' => $kegiatan,'data'=>$data,'summasuk'=>$this->sumkasmasuk,'sumkeluar'=>$this->sumkaskeluar,'saldo'=>$this->saldo, 'tipekas'=>$this->tipekas, 'namaevent'=>$this->namaevent,'logoPath'=>$logoPath])->output();
         $filename = 'Panitia Kegiatan  - ' . str_replace(' ', '_', $kegiatan->namakegiatan) . '.pdf';
         return response()->streamDownload(
             fn () => print($pdf),

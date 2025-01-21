@@ -83,7 +83,8 @@
 
 <body>
     <div class="header">
-        <img src="https://i.ibb.co.com/bNVPrX5/logo.png" alt="Logo">
+    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/' . $data->logo))) }}" alt="Logo">
+
         <h1>STT SILA DHARMA</h1>
         <h2>Lingk./Br. Cempaga, Kelurahan Cempaga, Kecamatan Bangli Bali</h2>
         <h3>No. Tlp. 089603158518</h3>

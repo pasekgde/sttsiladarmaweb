@@ -19,6 +19,9 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 // });
 
 Route::get('/cek-denda', [App\Http\Controllers\CekdendaController::class, 'index'])->name('denda.check');
+Route::get('/pendataan-stt', [App\Http\Controllers\PendataanController::class, 'index'])->name('pendataan');
+Route::post('/pendataan', [App\Http\Controllers\PendataanController::class, 'store'])->name('pendataan.store');
+Route::get('/confirm-pendataan', [App\Http\Controllers\PendataanController::class, 'confirmpendataan'])->name('pendataan.stt');
 
 Auth::routes();
 
@@ -103,7 +106,11 @@ Route::get('/superadmin-sisteminfo', [App\Http\Controllers\SisteminfoController:
 //pengurusinfo
 Route::get('/superadmin-pengurusinfo', [App\Http\Controllers\PengurusController::class, 'index'])->name('pengurusinfo');
 
+//outstt
+Route::get('/outstt', [App\Http\Controllers\OutsttController::class, 'index'])->name('outstt');
 
+//alumni
+Route::get('/alumni', [App\Http\Controllers\Alumni::class, 'index'])->name('alumni');
 
 });
 

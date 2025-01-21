@@ -138,7 +138,7 @@
 
         <table width="100%">
             <tr>
-                <td> <img src="https://i.ibb.co/CPDmCM8/logost.jpg" width="140px"> </td>
+            <td> <img src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/' . $logoPath))) }}" width="140px"> </td>
                 <td><td>
                 <td class="tengah">
                     <div class="caption" style="font-family:Arial; font-size:40px; font-weight:bold;"><span>STT. SILA DHARMA</span></div>
@@ -200,7 +200,6 @@
             <th class="tg-3wr7" scope="col" style="text-align: center;">Qty<br></th>
             <th class="tg-3wr7" scope="col" style="text-align: center;">Harga<br></th>
             <th class="tg-3wr7" scope="col" style="text-align: center;">Total<br></th>
-            <th class="tg-3wr7" scope="col" style="text-align: center;">Operator<br></th>
             </tr>
             <?php $no = 0;?>
             @foreach($data as $index => $kas)
@@ -213,7 +212,6 @@
             <td class="tg-rv4w" style="text-align: center;">{{$kas->qty}}</td>
             <td class="tg-rv4w">{{currency_IDR($kas->harga)}}</td>
             <td class="tg-rv4w">{{currency_IDR($kas->jumlah)}}</td>
-            <td class="tg-rv4w" style="text-align: center;">{{$kas->user}}</td>
             </tr>
             @endforeach
 
@@ -223,28 +221,32 @@
             <tr>
                 <!-- Kolom Bendahara -->
                 <td style="width: 33%; text-align: center;">
-                    <p>Bendahara</p>
+                    <p>Bendahara Panitia</p>
                     <strong>TTD</strong> <!-- Menambahkan TTD di bawah tanda tangan -->
                     <span class="signature">{{ $pengurus->bendaharapanitia ?? '' }}</span><br>
                 </td>
 
                 <!-- Kolom kosong untuk memisahkan -->
-                <td style="width: 33%;"></td>
+                <td style="width: 33%; text-align: center;">
+                    <p>Sekretaris Panitia</p>
+                    <strong>TTD</strong> <!-- Menambahkan TTD di bawah tanda tangan -->
+                    <span class="signature">{{ $pengurus->sekretarispanitia ?? '' }}</span><br>
+                </td>
 
                 <!-- Kolom Sekretaris -->
                 <td style="width: 33%; text-align: center;">
-                    <p>Sekretaris</p>
+                    <p>Ketua Panitia</p>
                     <strong>TTD</strong> <!-- Menambahkan TTD di bawah tanda tangan -->
-                    <span class="signature">{{ $pengurus->sekretarispanitia ?? '' }}</span><br>
+                    <span class="signature">{{ $pengurus->ketuapanitia ?? '' }}</span><br>
                 </td>
             </tr>
             <tr>
                 <!-- Ketua di tengah bawah -->
                 <td colspan="3" style="padding-top: 50px;">
                     <p>Mengetahui</p>
-                    <p>Ketua Panitia</p>
+                    <p>Ketua STT</p>
                     <strong>TTD</strong> <!-- Menambahkan TTD di bawah tanda tangan -->
-                    <span class="signature">{{ $pengurus->ketuapanitia ?? '' }}</span><br>
+                    <span class="signature">{{ $ketuastt->ketua ?? '' }}</span><br>
                 </td>
             </tr>
         </table>

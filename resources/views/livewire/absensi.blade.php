@@ -34,6 +34,28 @@
         </div>
     </div>
 
+    <div wire:loading wire:target="firstStepSubmit">
+        <div class="loading-container">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="loading-text">
+                Lanjut ke tahap 2...
+            </div>
+        </div>
+    </div>
+
+    <div wire:loading wire:target="secondStepSubmit">
+        <div class="loading-container">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="loading-text">
+                Lanjut ke tahap 3...
+            </div>
+        </div>
+    </div>
+
           <div class="x_content">
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">

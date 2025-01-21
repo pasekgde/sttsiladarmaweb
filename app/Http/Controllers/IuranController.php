@@ -13,7 +13,8 @@ class IuranController extends Controller
      */
     public function index()
     {
-        return view('pages.iuran.iuran');
+        //return view('pages.iuran.iuran');
+        return view('pages.iuran.iuranwajib');
     }
 
     /**

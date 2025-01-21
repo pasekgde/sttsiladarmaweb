@@ -23,7 +23,7 @@ class Kegiatan extends Model
         'saldo',
         'user',
         'created_at',
-        'update_at',
+        'updated_at',
         'pengguna',
         'status'
     ];
